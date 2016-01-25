@@ -8,7 +8,8 @@ Also, don't worry about files ending with "~" character, these are backup files 
 
 Each class(or a set of simmilar classes or functions) should have their own file. For example: SortingAlgorithms, SQLManager, Main etc.
 
--------------------------------IMPORTANT:------------------------
+-----------------------------IMPORTANT:-----------------------------
+
 We need mutual agreement on naming conventions so that the could would look nicer and there would be less misunderstandings when using someone else's written code. If this is alright with everyone, we will use this NAMING CONVENTION:
 
 1) Class names should always start with uppercase letter and each new word should start with uppercase letter:
