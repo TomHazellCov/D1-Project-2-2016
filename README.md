@@ -13,25 +13,21 @@ We need mutual agreement on naming conventions so that the could would look nice
 
 1) Class names should always start with uppercase letter and each new word should start with uppercase letter:
 
-'''
-	class VectorThing:
-		__init__(self, x, y):
-			self.x = x
-			self.y = y
-'''
-			
+    class VectorThing:
+        __init__(self, x, y):
+            self.x = x
+            self.y = y
+	
 2) Method, function, variable, parameter and class attribute names should start with first lowercase letter and each new word should start with uppercase letter:
 
-'''
-	def methodName(self, argumentFirst, argumentSecond):
-		x = ...
-		y = ...
-		count = ...
-		otherThing = ...
-		nextThing = ...
-		otherFucntion(count,otherThing,nextThing)
-		return VectorThing(x,y)
-'''
+        def methodName(self, argumentFirst, argumentSecond):
+                x = ...
+                y = ...
+                count = ...
+                otherThing = ...
+                nextThing = ...
+                otherFucntion(count,otherThing,nextThing)
+                return VectorThing(x,y)
 
 3) Classes should have no private attributes
 
