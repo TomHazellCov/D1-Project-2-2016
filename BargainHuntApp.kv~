@@ -1,6 +1,0 @@
-<BargainHunt>:
-	
-	canvas:
-		Rectangle:
-			pos: self.center_x - self.width/2, self.center_y - self.height/2
-			size: self.size
