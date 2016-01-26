@@ -1,4 +1,5 @@
 # Bargain Hunt
+Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazell, Alex Stacey,
 
 HOW TO USE GITHUB:
 
