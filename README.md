@@ -2,19 +2,12 @@
 
 HOW TO USE GITHUB:
 
-If you want to submit a change you have to: 
-1) PULL (download everything) from the repository 				(git pull)
-2) Change or ADD files you want									(git add)
-3) COMMIT changes with an appropriate comment					(git commit)
-4) PUSH (upload to server) changes to server					(git push)
+If you want to submit a change you have to:
 
-Upload all screenshots, designs etc. to Documents folder.
-
-Pong files will be deleted later on, they are here just for learning purposes (to get hang of how Kivy API works).
-
-Also, don't worry about files ending with "~" character, these are backup files made by my (Ed) editor.
-
-Each class(or a set of simmilar classes or functions) should have their own file. For example: SortingAlgorithms, SQLManager, Main etc.
+    1) PULL (download everything) from the repository					(git pull)
+    2) Change or ADD files you want							(git add)
+    3) COMMIT changes with an appropriate comment					(git commit)
+    4) PUSH (upload to server) changes to server					(git push)
 
 -----------------------------IMPORTANT:-----------------------------
 
