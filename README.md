@@ -1,4 +1,4 @@
-# D1-Project-2-2016
+# Bargain Hunt
 
 Upload all screenshots, designs etc. to Documents folder.
 
