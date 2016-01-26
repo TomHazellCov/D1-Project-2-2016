@@ -50,7 +50,6 @@
         id: ball
         center: root.center
         
-        
     PongPaddle:
         id: player1
         x: root.x

@@ -1,6 +1,9 @@
-<BargainHunt>:
+<BargainHuntGame>:
 	
 	canvas:
+	
+		Color:
+			rgb: 0.0,0.5,0.8
 		Rectangle:
 			pos: self.center_x - self.width/2, self.center_y - self.height/2
 			size: self.size
