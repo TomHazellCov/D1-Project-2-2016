@@ -9,6 +9,15 @@ If you want to submit a change you have to:
     2) Change or ADD files you want                       (git add)
     3) COMMIT changes with an appropriate comment         (git commit)
     4) PUSH (upload to server) changes to server          (git push)
+	
+Required parts of the program:
+	Main Screen(robot's naigation, kivy)
+	Robot Controler (telling the robot where to go ad what to pick up)
+	ItemEditor(PyQt)
+	Settings(PyQt)
+	SQL(for retreving/saving items)
+	Saveing settings(JSON)
+	SortedListView(PyQt)
 
 -----------------------------IMPORTANT:-----------------------------
 
