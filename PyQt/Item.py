@@ -1,5 +1,6 @@
 class Item:
-    def __init__(self, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted):
+    def __init__(self, itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted):
+        self.itemNumber = itemNumber 
         self.itemName = itemName
         self.itemType = itemType
         self.itemPrice = itemPrice
