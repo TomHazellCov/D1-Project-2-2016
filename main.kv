@@ -1,33 +1,29 @@
-
-
 <Item>:
-	size: 32,32
-	canvas:
-		Color:
-			rgb: 0,0,0
+	size_hint: 0,0
+	size: 0,0
+	
 	Image:
-		source: "Assets/fish.png"
-		allow_stretch: True
 		texture: self.texture
-		size: self.texture.size
-		
-			
+		allow_stretch: True	
+		keep_ratio: False
+		size: 64,64
+		pos: root.pos
 
 <Background>:
 	size: root.size
+	
 	canvas:
 		Color:
 			rgb: 0,0,0
-		
 			
 	Image:
-			
 		source: "Assets/background.jpeg"
 		allow_stretch: True	
+		keep_ratio: False
 		texture: self.texture
 		size: root.size
 	
 
-<GameScreen>:
-	
+<BargainHunt>:
+	size: 800,600
 	
