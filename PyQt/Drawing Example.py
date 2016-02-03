@@ -5,7 +5,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 #based on http://zetcode.com/gui/pyqt5/tetris/
-""" This shows a drawable space being redrawn every 300ms, along side a button that dose nothing, in a 3X2 grid layout"""
+""" This shows a drawable space being redrawn every 300ms, along side a button that does nothing, in a 3X2 grid layout"""
 class PaintWidget(QWidget):
 
     Speed = 300#ms to redraw at
@@ -56,7 +56,7 @@ class PaintWidget(QWidget):
             y = random.randint(1, size.height()-1)
             qp.drawPoint(x, y)
 
-    #unused but her eto show what it dose
+    #unused but here to show what it does
     def drawSquare(self, painter, x, y):
 
 
