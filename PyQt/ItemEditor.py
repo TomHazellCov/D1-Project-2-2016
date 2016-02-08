@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Item import *
+from SQL import *
 
 
 class Example(QWidget):
@@ -22,8 +23,10 @@ class Example(QWidget):
         btn2 = QPushButton("Add New Item")
         btn2.clicked.connect(self.buttonClicked)
 
-        #data here should be goten from SQLite db this data is tempory        
-        data = [Item("1", "name", "Type", "1.2", "12", "0.8", "0.6", "Yes"), Item("2", "name", "Type", "1.2", "12", "0.8", "0.6", "yes"),Item("3", "name", "Type", "1.2", "12", "0.8", "0.6", "No")]
+        #data here should be goten from SQLite db this data is tempory
+        self.sql = SQL()
+        data = self.sql.getItems()
+         
         
         self.Table = QTableWidget(len(data), 8)
         self.Table.setHorizontalHeaderLabels(["ItemNumber", "Name", "Type", "Price", "Quantity", "X", "Y", "Wanted"])
@@ -32,7 +35,7 @@ class Example(QWidget):
         for item in data:
             flags = Qt.ItemFlags()
             flags != Qt.ItemIsEnabled
-            row0 = QTableWidgetItem(item.itemNumber)
+            row0 = QTableWidgetItem(str(item.itemNumber))
             row0.setFlags(flags)
             self.Table.setItem(row, 0, row0)
             self.Table.setItem(row, 1, QTableWidgetItem(item.itemName))
@@ -81,7 +84,10 @@ class Example(QWidget):
                 else:
                     print("error")
                 
-            item = self.Table.item(1,1)
+            self.sql.setItems(data)
+
+            
+            
             #shuld now return a list of items to the SQL class to be saved
             return
         #adds a new row at the end
