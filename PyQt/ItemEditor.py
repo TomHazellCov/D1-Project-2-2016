@@ -23,7 +23,6 @@ class Example(QWidget):
         btn2 = QPushButton("Add New Item")
         btn2.clicked.connect(self.buttonClicked)
 
-        #data here should be goten from SQLite db this data is tempory
         self.sql = SQL()
         data = self.sql.getItems()
          
@@ -67,22 +66,29 @@ class Example(QWidget):
         if self.sender().text() == "Done":
             numRows = self.Table.rowCount()
             data = []
-            for i in range(numRows):
-                itemNumber = self.Table.item(i,0).text()
-                itemName = self.Table.item(i,1).text()
-                itemType = self.Table.item(i,2).text()
-                itemPrice = self.Table.item(i,3).text()
-                itemQuantity = self.Table.item(i,4).text()
-                postionX = self.Table.item(i,5).text()
-                postitionY = self.Table.item(i,6).text()
-                itemIsWanted = self.Table.item(i,7).text()
+            try:
+                for i in range(numRows):
+                    itemNumber = self.Table.item(i,0).text()
+                    itemName = self.Table.item(i,1).text()
+                    itemType = self.Table.item(i,2).text()
+                    itemPrice = self.Table.item(i,3).text()
+                    itemQuantity = self.Table.item(i,4).text()
+                    postionX = self.Table.item(i,5).text()
+                    postitionY = self.Table.item(i,6).text()
+                    itemIsWanted = self.Table.item(i,7).text()
                 
-                item = Item(itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted)
-                if(self.Validate(item)):
-                    data.append(item)
-                    print("no")
-                else:
-                    print("error")
+                    item = Item(itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted)
+                    valid = self.Validate(item)
+                    if(valid == True):
+                        data.append(item)
+                    else:
+                        QMessageBox.about(self, "Error", valid)
+
+            except:
+                QMessageBox.about(self, "Error", "One or more of the fields are blank/empty")
+
+                
+                return False
                 
             self.sql.setItems(data)
 
@@ -97,37 +103,44 @@ class Example(QWidget):
         #sets the first coloum to uneditable
         flags = Qt.ItemFlags()
         flags != Qt.ItemIsEnabled
-
-        itemNumber = self.Table.item(self.Table.rowCount() -2,0).text()
+        itemNumber = 0
+        print(self.Table.rowCount())
+        if self.Table.rowCount() == 1:
+            itemNumber == -1
+        elif self.Table.rowCount() == 2:
+            itemNumber == 0
+        else:
+            itemNumber = self.Table.item(self.Table.rowCount() -2,0).text()
         row0 = QTableWidgetItem(str(int(itemNumber) + 1))
         row0.setFlags(flags)
         
         self.Table.setItem(self.Table.rowCount() - 1, 0, row0)
+               
         
     def Validate(self, item):
         if item.itemNumber == "":
             return False
         
         if item.itemName == "":
-            return False
+            return "an item name is blank"
         
         if item.itemType == "":
-            return False
+            return "an item type is blank"
         
         if item.itemPrice == "" or not self.isNumeric(item.itemPrice):
-            return False
+            return "an item price is not numeric"
         
         if item.itemQuantity == "" or not self.isNumeric(item.itemQuantity):
-            return False
+            return "an item quantity is not numeric"
         
         if item.postionX == "" or not self.isNumeric(item.postionX):
-            return False
+            return "an items position X is not numeric"
         
         if item.postitionY == "" or not self.isNumeric(item.postitionY):
-            return False
+            return "an items position Y is not numeric"
         
         if item.itemIsWanted == "" or not self.isBool(item.itemIsWanted):
-            return False
+            return "an items wanted value is not a boolean"
 
         return True
         
