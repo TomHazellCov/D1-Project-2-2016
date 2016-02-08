@@ -12,9 +12,9 @@ If you want to submit a change you have to:
 	
 Required parts of the program:
 
-	Main Screen(robot's naigation, kivy)
+	Main Screen(robot's navigation, kivy)
 	
-	Robot Controler (telling the robot where to go ad what to pick up)
+	Robot Controler (telling the robot where to go and what to pick up)
 	
 	ItemEditor(PyQt)
 	
