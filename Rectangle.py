@@ -1,7 +1,6 @@
 """
 	Rectangle.py : class representing a Rectangle.
-	Programmed by: Edvinas Kilbauskas
-
+	Credits: Edvinas Kilbauskas
 
 	This file is part of BargainHunt.
 
@@ -16,7 +15,7 @@
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with BargainHunt.  If not, see <http://www.gnu.org/licenses/>.
+	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
     
 """
 

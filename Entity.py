@@ -1,5 +1,5 @@
 """
-	SortingAlgorithms.py : BargainHunt game
+	Entity.py : classes representing an Entity.
 	Credits: Edvinas Kilbauskas
 
 	This file is part of BargainHunt.
@@ -16,4 +16,28 @@
 
 	You should have received a copy of the GNU General Public License
 	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
+    
 """
+
+from kivy.uix.image import Image
+from kivy.vector import Vector
+
+class Sprite(Image):
+	def __init__(self, width, height, source):
+		super(Image,self).__init__(size = Vector(width,height), source = source)
+ 
+class Entity:
+	def __init__(self,x, y, width, height, sprite, centered = False):
+		self.sprite = sprite
+		self.bounds = Rectangle(x,y,width,height, centered)
+		
+	def addToLayout(self, layout):
+		layout.add_widget(self.sprite)
+	
+	def setTexture(self, texture):
+		self.texture = texture
+		
+	def setPosition(self, pos):
+		self.bounds.setPosition(*pos)
+		# for kivy graphics API
+		self.image.pos = Vector(*pos)
