@@ -8,3 +8,7 @@ class Item:
         self.postionX = postionX
         self.postitionY = postitionY
         self.itemIsWanted = itemIsWanted
+
+    def __eq__(self, other): 
+        return self.__dict__ == other.__dict__
+
