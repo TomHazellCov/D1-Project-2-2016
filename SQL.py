@@ -5,7 +5,7 @@ import os.path
 class SQLManager:
 
 	def __init__(self):
-		pass
+		self.load("Databases/VRBH.db")
 	
 	def create(self):
 		self.con.execute("""CREATE TABLE 'items' (
@@ -30,7 +30,6 @@ class SQLManager:
 		self.cur.close()
 
 	def getItems(self):
-		self.connect()
 		itemList = []
 		for row in self.con.execute("SELECT * FROM items"):
 			item = Item(str(row[0]), str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]), str(row[6]), str(row[7]))

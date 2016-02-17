@@ -75,7 +75,7 @@ class Item:
 	height = 64
 	
 	def __init__(self, itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted):
-		super(Item,self).__init__(positionX, positionY, self.width, self.height, Sprite(self.width, self.height, "Assets/fish.png"))
+		#super(Item,self).__init__(positionX, positionY, self.width, self.height, Sprite(self.width, self.height, "Assets/fish.png"))
 		self.itemNumber = itemNumber
 		self.itemName = itemName
 		self.itemType = itemType

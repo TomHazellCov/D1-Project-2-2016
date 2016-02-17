@@ -23,7 +23,7 @@ class Example(QWidget):
         btn2 = QPushButton("Add New Item")
         btn2.clicked.connect(self.buttonClicked)
 
-        self.sql = SQL()
+        self.sql = SQLManager()
         data = self.sql.getItems()
          
         
@@ -89,10 +89,8 @@ class Example(QWidget):
                 return False
                 
             self.sql.setItems(data)
-
-            
-            
-            #shuld now return a list of items to the SQL class to be saved
+            self.sql.close()
+            QtCore.QCoreApplication.instance().quit()
             return
         #adds a new row at the end
         rowPosition = self.Table.rowCount()
