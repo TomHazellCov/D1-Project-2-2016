@@ -49,11 +49,11 @@ class Setting_Code(QWidget):
 
 
         self.combo1 = QComboBox(self)
-        self.combo1.addItem("Africa")
-        self.combo1.addItem("Scunthorpe")
-        self.combo1.addItem("Mansfield")
-        self.combo1.addItem("Two Forks")
-        self.combo1.addItem("Korea")
+        self.combo1.addItem("Top Left")
+        self.combo1.addItem("Top Right")
+        self.combo1.addItem("Bottom Left")
+        self.combo1.addItem("Bottom Right")
+        self.combo1.addItem("Center")
         self.combo1.move(100, 20)
         
 
@@ -68,8 +68,8 @@ class Setting_Code(QWidget):
         self.combo3.move(100, 120)
 
         self.combo4 = QComboBox(self)
-        self.combo4.addItem("Knitting")
-        self.combo4.addItem("Fishing")
+        self.combo4.addItem("Bubble")
+        self.combo4.addItem("Insertion")
         self.combo4.move(100, 170)
 
         #tells the button to run the makefile function 
