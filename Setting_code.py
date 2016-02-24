@@ -1,4 +1,5 @@
-"""Allows user to select settings. You will need to preinstall SaveSettings and the Icon image in the same folder, and make sure you install PyQt5 before trying to run it"""
+"""Allows user to select settings. You will need to preinstall SaveSettings and the Icon
+image in the same folder, and make sure you install PyQt5 before trying to run it"""
 
 #importing all the stuff I`ll need
 import sys
@@ -8,6 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 #So I can use the class set up by Tom
 from SaveSettings import *
+from json import *
 
 #setting up the code
 
@@ -23,11 +25,11 @@ class Setting_Code(QWidget):
         self.setFixedSize(250, 260) #it looks awful bigger, I`ve locked the size down 
         self.move(1200, 0)
         self.setWindowTitle('Settings')
-        self.setWindowIcon(QIcon('Assets\settingicon.png'))
-        
+        self.setWindowIcon(QIcon('settingicon.png'))
+        # readd this code to start of setting icon address for github version: Assets/
         #sets colour, note we have to use USA spelling
         palette= QPalette()
-        palette.setColor(QPalette.Background, Qt.blue)
+        palette.setColor(QPalette.Background, QColor(42, 77,171, 255))
         self.setPalette(palette) 
 
         #causes the done button to appear 
@@ -42,6 +44,7 @@ class Setting_Code(QWidget):
         self.label2.move(40, 70)
         self.label3 = QLabel("Order:", self)
         self.label3.move(50, 120)
+        
         self.label4 = QLabel("Algorithm:", self)
         self.label4.move(30, 170)
 
@@ -75,6 +78,52 @@ class Setting_Code(QWidget):
         #tells the button to run the makefile function 
         qbtn.clicked.connect(self.makefile)
 
+        #loads previous settings
+        try:
+            #makes json file into dict
+            setting = json.loads(open("Databases/Settings.json").read())
+            #takes the value attached to the keys and turns them into a item
+            colist1= setting["StartLocation"]
+            colist2= setting["sortByValue"]
+            colist3= setting["sortByOrder"]
+            colist4= setting["algorithm"]
+            #checks which one it is then sets the box to be it
+            if "Top Left" in colist1:
+                self.combo1.setCurrentIndex0(0)
+            elif "Top Right" in colist1:
+                self.combo1.setCurrentIndex(1)
+            elif "Top Bottom" in colist1:
+                self.combo1.setCurrentIndex(3)
+            elif "Bottom Left" in colist1:
+                self.combo1.setCurrentIndex(2)
+            elif "Center" in colist1:
+                self.combo1.setCurrentIndex(4)
+            else:
+                pass
+            
+            if "Name" in colist2:
+                self.combo2.setCurrentIndex(0)
+            elif "Price" in colist2:
+                self.combo2.setCurrentIndex(1)
+            else:
+                pass
+
+            if "Ascending" in colist3:
+                self.combo3.setCurrentIndex(0)
+            elif "Decending" in colist3:
+                self.combo3.setCurrentIndex(1)
+            else:
+                pass
+
+            if "Bubble" in colist4:
+                self.combo4.setCurrentIndex(0)
+            elif "Insertion" in colist4:
+                self.combo4.setCurrentIndex(1)
+            else:
+                pass
+        finally:
+            pass
+
         self.show()
 
     def makefile(self):
@@ -84,10 +133,11 @@ class Setting_Code(QWidget):
         order = (self.combo3.currentText())
         algorithm = (self.combo4.currentText())
         prefs= prefsStore(location, sortby, order, algorithm)
-        #I chose to save the file in Pickle form
         save = prefsSave()
         save.Save(prefs)
+        #exits GUI
         QCoreApplication.instance().quit()
+
         #shuts down the code
         
 if __name__ == '__main__':
