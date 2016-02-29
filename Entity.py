@@ -16,76 +16,31 @@
 
 	You should have received a copy of the GNU General Public License
 	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
-    
 """
 
-from kivy.uix.image import Image
 from kivy.vector import Vector
 from Rectangle import Rectangle
+from Error import *
+from Sprite import Sprite
 
-class Sprite(Image):
-	def __init__(self, width, height, source):
-		super(Sprite,self).__init__(size = Vector(width,height), source = source)
-		self.allow_stretch = True
-		self.keep_ratio = False
-		
-	def setPosition(self, x, y):
-		self.pos = Vector(x,y)
- 
 class Entity:
-	def __init__(self,x, y, width, height, sprite, centered = False):
+	def __init__(self,x, y, sprite = None):
 		self.sprite = sprite
-		self.bounds = Rectangle(x,y,width,height, centered)
+		if(self.sprite != None and sprite != None):
+			self.sprite = sprite
+		else:
+			self.sprite = Sprite("Assets/default.png")
+
+		self.bounds = Rectangle(x,y,sprite.texture.size[0],sprite.texture.size[1])
+		self.setPosition(x,y)
 		
 	def addToLayout(self, layout):
 		layout.add_widget(self.sprite)
-	
-	def setTexture(self, texture):
-		self.texture = texture
+
+	def setSprite(self, sprite):
+		self.sprite = sprite
 		
 	def setPosition(self, x, y):
 		self.bounds.setPosition(x,y)
-		# for kivy graphics API
 		self.sprite.setPosition(x,y)
-		
-class Background(Entity):
-	width = 800
-	height = 600
-	
-	def __init__(self):
-		super(Background,self).__init__(0, 0, self.width, self.height, Sprite(self.width,self.height,"Assets/background.jpeg"))
-		self.size = Vector(self.width, self.height)	
-	
-class Item(Entity):
-	width = 64
-	height = 64
-
-	def __init__(self, name, type, price, qty):
-		self.name = name
-		self.type = type
-		self.price = price
-		self.qty = qty
-		self.bounds = Rectangle(0,0,64,64)
-
-	def __str__(self):
-		return "Name: " + self.name + '\n' + "Type: " + self.type + '\n' + "Price: " + str(self.price) + '\n' + "Qty: " + str(self.qty)
-		
-class Item:
-	width = 64
-	height = 64
-	
-	def __init__(self, itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted):
-		super(Item,self).__init__(positionX, positionY, self.width, self.height, Sprite(self.width, self.height, "Assets/fish.png"))
-		self.itemNumber = itemNumber
-		self.itemName = itemName
-		self.itemType = itemType
-		self.itemPrice = itemPrice
-		self.itemQuantity = itemQuantity
-		self.postionX = postionX
-		self.postitionY = postitionY
-		self.itemIsWanted = itemIsWanted
-
-	def __eq__(self, other): 
-		# whoever did this, is genius
-		return self.__dict__ == other.__dict__
 		

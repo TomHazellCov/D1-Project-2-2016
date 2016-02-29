@@ -24,7 +24,7 @@ from kivy.vector import Vector
 class Rectangle:
 	""" IMPORTANT: Use given methods to change attributes, do NOT change directly. """
 	
-	def __init__(self, x,y,width,height, centered = False):
+	def __init__(self, x,y,width,height):
 		self.bottomLeft = Vector(0,0)
 		self.topRight = Vector(0,0)
 		self.size = Vector(width,height)
@@ -33,7 +33,7 @@ class Rectangle:
 		self.bottom = 0
 		self.left = 0
 		self.right = 0
-		self.setPosition(x,y,centered)
+		self.setPosition(x,y)
 		
 	def recalculatePoints(self):
 		"""	Recalculates points based on bottomLeft and size attributes """
@@ -48,15 +48,8 @@ class Rectangle:
 		self.bottomLeft += Vector(x,y)
 		self.recalculatePoints()
 		
-	def setPosition(self, x,y, centered = False):
-		"""	Sets position and recalculates points, if centered = True then x,y will be center of the rectangle,
-			otherwise, x,y will be bottomLeft """
-			
-		if(centered == True):
-			self.bottomLeft = Vector(x,y) - (self.size/2)
-		else:
-			self.bottomLeft = Vector(x,y)
-		
+	def setPosition(self, x, y):
+		self.bottomLeft = Vector(x,y)	
 		self.recalculatePoints()
 		
 	def setSize(self,width,height):
@@ -75,12 +68,8 @@ class Rectangle:
 		return False
 	
 	def collided(self,other):
-		self
-		other
+		pass
 		
-		return True
-		return False
-	
 	def __str__(self):
 		return "BottomLeft: " + self.bottomLeft + '\n' + \
 			"TopRight: " + self.topRight + '\n' + \

@@ -1,6 +1,6 @@
 """
 	SortingAlgorithms.py : BargainHunt game
-	Credits: Edvinas Kilbauskas
+	Credits: 
 
 	This file is part of BargainHunt.
 
@@ -17,3 +17,5 @@
 	You should have received a copy of the GNU General Public License
 	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
 """
+
+def fastSort(array, sortByPrice, 

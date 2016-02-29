@@ -7,18 +7,14 @@ from PyQt5.QtCore import *
 #based on http://zetcode.com/gui/pyqt5/tetris/
 """ This shows a drawable space being redrawn every 300ms, along side a button that does nothing, in a 3X2 grid layout"""
 class PaintWidget(QWidget):
-
     Speed = 300#ms to redraw at
 
     def __init__(self):
         super().__init__()
-
         self.i = 0
         self.initUI()
 
-
     def initUI(self):
-
         self.text = "HI"
         self.i = self.i + 1
 
@@ -27,8 +23,6 @@ class PaintWidget(QWidget):
         self.show()
         self.timer = QBasicTimer()#the timer is to redraw the screen (calls timerEvent )
         self.timer.start(PaintWidget.Speed, self)
-
-
 
     def paintEvent(self, event):
 
@@ -58,8 +52,6 @@ class PaintWidget(QWidget):
 
     #unused but here to show what it does
     def drawSquare(self, painter, x, y):
-
-
         color = QColor(0xCC6666)
         painter.fillRect(x + 1, y + 1, self.squareWidth() - 2,
             self.squareHeight() - 2, color)
@@ -80,19 +72,13 @@ class PaintWidget(QWidget):
         if event.timerId() == self.timer.timerId():
             self.update()
 
-
-
-
 class Example(QWidget):
-
     def __init__(self):
         super().__init__()
 
         self.initUI()
 
-
     def initUI(self):
-
         title = QPushButton("eg", self)
 
         grid = QGridLayout()
@@ -101,7 +87,6 @@ class Example(QWidget):
         grid.addWidget(title, 4, 0)
         pw = PaintWidget()
         grid.addWidget(pw, 1, 0, 2, 2)
-
 
         self.setLayout(grid)
 

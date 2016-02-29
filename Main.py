@@ -19,55 +19,53 @@
 """
 
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.uix.button import Button
-from kivy.uix.image import Image
-from kivy.core.image import Texture
 from kivy.uix.floatlayout import FloatLayout
-from kivy.properties import NumericProperty, ReferenceListProperty,\
-    ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.lang import Builder
-from SQL import SQLManager
-
+from ItemManager import ItemManager
 from Rectangle import Rectangle
 from Entity import *
-
+from random import random
+from SettingsPanel import SettingsPanel
+from kivy.uix.button import *
+from Floor import Floor
 
 class Robot:
 	def __init__(self, position):
 		pass
 		
-class BargainHunt(FloatLayout):
-	def __init__(self, app, **kwargs):
-		super(BargainHunt,self).__init__(**kwargs)
+""" Main game class with game loop """
+
+class GameScreen(FloatLayout):
+	
+	def __init__(self, app):
+		super(GameScreen,self).__init__()
 		
-		self.items = []
+		# ADD BACKGROUND
+		self.floor = Floor()
+		self.floor.addToLayout(self)
 		
-		self.app = app
-		background = Background()
-		background.addToLayout(self)
+		# LOAD ITEMS
+		self.itemManager = ItemManager("Databases/sql.db")
+		self.items = self.itemManager.getItems()
+		
+		self.settingsPanel = SettingsPanel(self)
 		
 	def loadItems(self):
-		self.sql = SQLManager()
-		self.sql.load("Databases/sql.db")
-		self.items = self.sql.getItems()
+		pass
 	
 	def update(self, dt):
 		pass
 	
 	def on_touch_down(self, touch):
-		item = Item(name="Name",type="Type",price=199.99,qty=1)
-		item.setPosition(*touch.pos)
-		item.addToLayout(self)
-		
-class MainApp(App):
+		super(FloatLayout,self).on_touch_down(touch)
+	
+class BargainHuntApp(App):
 	def build(self):
-		self.root = BargainHunt(self)
+		self.root = GameScreen(self)
 		Clock.schedule_interval(self.root.update, 1.0 / 60.0)
 		return self.root
 
 if __name__ == '__main__':
-	MainApp().run()
+	BargainHuntApp().run()
