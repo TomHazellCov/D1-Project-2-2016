@@ -43,4 +43,49 @@ class Entity:
 	def setPosition(self, x, y):
 		self.bounds.setPosition(x,y)
 		self.sprite.setPosition(x,y)
+<<<<<<< HEAD
 		
+=======
+		
+class Background(Entity):
+	width = 800
+	height = 600
+	
+	def __init__(self):
+		super(Background,self).__init__(0, 0, self.width, self.height, Sprite(self.width,self.height,"Assets/background.jpeg"))
+		self.size = Vector(self.width, self.height)	
+	
+class Item(Entity):
+	width = 64
+	height = 64
+
+	def __init__(self, name, type, price, qty):
+		self.name = name
+		self.type = type
+		self.price = price
+		self.qty = qty
+		self.bounds = Rectangle(0,0,64,64)
+
+	def __str__(self):
+		return "Name: " + self.name + '\n' + "Type: " + self.type + '\n' + "Price: " + str(self.price) + '\n' + "Qty: " + str(self.qty)
+		
+class Item:
+	width = 64
+	height = 64
+	
+	def __init__(self, itemNumber, itemName, itemType, itemPrice, itemQuantity, postionX, postitionY, itemIsWanted):
+		#super(Item,self).__init__(positionX, positionY, self.width, self.height, Sprite(self.width, self.height, "Assets/fish.png"))
+		self.itemNumber = itemNumber
+		self.itemName = itemName
+		self.itemType = itemType
+		self.itemPrice = itemPrice
+		self.itemQuantity = itemQuantity
+		self.postionX = postionX
+		self.postitionY = postitionY
+		self.itemIsWanted = itemIsWanted
+
+	def __eq__(self, other): 
+		# whoever did this, is genius
+		return self.__dict__ == other.__dict__
+		
+>>>>>>> bb69b7eb2de57ca9757a6f57f56a1ef424470237
