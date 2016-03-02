@@ -20,7 +20,7 @@
 
 
 
-def insertionSortAccending(array):
+def insertionSortAscending(array):
 
     for i in range(1,len(array)):
 
@@ -41,7 +41,7 @@ def insertionSortAccending(array):
 
         array[index] = valueInArray
 
-def insertionSortDeccending(array):
+def insertionSortDescending(array):
 
     for i in range(1,len(array)):
 
@@ -67,24 +67,24 @@ def tests():
     #string tests
     print('Tests to see if the two algorithms work on lists of strings :')         
     alist = ['Banana','Orange','Pear','Apple','Melon']
-    insertionSortAccending(alist)
-    print('Strings Accending >>>')
+    insertionSortAscending(alist)
+    print('Strings Ascending >>>')
     print(alist)
 
-    insertionSortDeccending(alist)
-    print('Strings Deccending >>>')
+    insertionSortDescending(alist)
+    print('Strings Descending >>>')
     print(alist)
 
     #number tests
 
     print('Tests to see if the two algorithms work on lists of Ints:')         
     alist2 = [3,5,1,67,42,33,56,90,102]
-    insertionSortAccending(alist2)
-    print('Ints Accending >>>')
+    insertionSortAscending(alist2)
+    print('Ints Ascending >>>')
     print(alist2)
 
-    insertionSortDeccending(alist2)
-    print('Ints Deccending >>>')
+    insertionSortDescending(alist2)
+    print('Ints Descending >>>')
     print(alist2)
 
 
