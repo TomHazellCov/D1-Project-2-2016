@@ -1,9 +1,6 @@
 """used to save the users settings betwen runs in a file: Settings.json"""
 import json
-class prefsSave:
-    
-    def GetSettings(self):
-        pass
+class SettingsManager:
 
     #takes a prefsStore Object
     def Save(self, prefs):
@@ -22,7 +19,7 @@ class prefsSave:
 
 #Used to store and save the users settings
 #(all in lowercase)Takes the startlocation(eg topleft), sortByValue(eg name), sortByOrder(eg ascending) and algorithm (eg Bubble)   
-class prefsStore:
+class Settings:
     def __init__(self, StartLocation, sortByValue, sortByOrder, algorithm):
         self.StartLocation = StartLocation
         self.sortByValue = sortByValue
