@@ -29,23 +29,20 @@ class Setting_Code(QWidget):
         # readd this code to start of setting icon address for github version: Assets/
         #sets colour, note we have to use USA spelling
         palette= QPalette()
-        palette.setColor(QPalette.Background, QColor(42, 77,171, 255))
-        self.setPalette(palette) 
+        palette.setColor(QPalette.Background, QColor(42, 77, 171, 255))
+        self.setPalette(palette)
 
-        #causes the done button to appear 
-        qbtn = QPushButton('Done', self)
-        qbtn.resize(qbtn.sizeHint())
-        qbtn.move(100, 215)
         #setting up the labels that will sit next to the drop down menus 
-
-        self.label1 = QLabel("Start Location:", self)
+        #as label1 is where the dark 2nd background comes though it has ALOT of new line commands 
+        self.label1 = QLabel(" Start Location:                                   \n                                                              \n                                                              \n                                                              \n                                                              \n                                                              \n                                                              \n                                                              \n                                                                   \n                                                                   \n                                                                   \n                                                                   \n                                                                   \n                                                                   \n                                                                   \n                                                                                 \n                                                                        ", self)
         self.label1.move(15, 20)
-        self.label2 = QLabel("Sort By:", self)
+        self.label2 = QLabel(" Sort By:", self)
         self.label2.move(40, 70)
-        self.label3 = QLabel("Order:", self)
+        self.label3 = QLabel(" Order:", self)
+        
         self.label3.move(50, 120)
         
-        self.label4 = QLabel("Algorithm:", self)
+        self.label4 = QLabel(" Algorithm:", self)
         self.label4.move(30, 170)
 
         #now we set up the drop down menus 
@@ -75,6 +72,11 @@ class Setting_Code(QWidget):
         self.combo4.addItem("Insertion")
         self.combo4.move(100, 170)
 
+        #causes the done button to appear 
+        qbtn = QPushButton('Done', self)
+        qbtn.resize(qbtn.sizeHint())
+        qbtn.move(100, 215)
+
         #tells the button to run the makefile function 
         qbtn.clicked.connect(self.makefile)
 
@@ -89,7 +91,7 @@ class Setting_Code(QWidget):
             colist4= setting["algorithm"]
             #checks which one it is then sets the box to be it
             if "Top Left" in colist1:
-                self.combo1.setCurrentIndex0(0)
+                self.combo1.setCurrentIndex(0)
             elif "Top Right" in colist1:
                 self.combo1.setCurrentIndex(1)
             elif "Top Bottom" in colist1:
@@ -124,10 +126,16 @@ class Setting_Code(QWidget):
         finally:
             pass
 
+        #sets secondary background and font colour 
+        self.label1.setStyleSheet("QLabel { background-color :  rgb(3, 20, 50); color :  rgb(42, 77, 171); }")
+        self.label2.setStyleSheet("QLabel {color :  rgb(42, 77, 171); }")
+        self.label3.setStyleSheet("QLabel {color :  rgb(42, 77, 171); }")
+        self.label4.setStyleSheet("QLabel {color :  rgb(42, 77, 171); }")
+
         self.show()
 
     def makefile(self):
-        #telling the function what the variables are using current text to save the current value 
+        """telling the function what the variables are using current text to save the current value. Only works with Setting_code"""
         location = (self.combo1.currentText())
         sortby = (self.combo2.currentText())
         order = (self.combo3.currentText())
@@ -146,3 +154,4 @@ if __name__ == '__main__':
 
     ex = Setting_Code()
     sys.exit(app.exec_())
+
