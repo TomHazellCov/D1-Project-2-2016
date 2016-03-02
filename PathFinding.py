@@ -1,24 +1,28 @@
 class node:
+    """Class used to store an X and Y cordanat"""
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        #self.isObject = isObject
-    def __eq__(self, other): 
+        
+    def __eq__(self, other):
+        #to test if an x and y cord are equal
         return self.__dict__ == other.__dict__
 
     def __hash__(self):
+        #required for this to be added to dictionery
         return hash(tuple((self.x, self.y)))
 
 class PathFind:
+    """As a constructior it takes a 2D array with 0's where the robot can go and 1's where it cant"""
+    def __init__(self, arrayMap, bounds):
+        self.bounds = bounds
+        self.array = arrayMap
+    """Returns a list (reverse order) or the nodes to go to in orger to get to the obective, or false if its imposible. Takes 2 nodes, starting position and end position. """
+    def AStar(self, start, goal):
 
-    def __init__(self):
-        self.bounds = 5
-
-    def A(self, start, goal):
-
-        matrix = self.array()
+        matrix = self.array
         closedSet = []
-
+        
         openSet = [start]
 
         cameFrom = {}
@@ -33,7 +37,6 @@ class PathFind:
         while KeepLooping :
             
             current = self.lowestValueInDict(openSet, fScore)
-            print(current, "cur")
             if current.x == goal.x and current.y == goal.y:
                 return self.reconstruct_path(cameFrom, goal)
             openSet.remove(current)
@@ -91,12 +94,12 @@ class PathFind:
         return False
 
     def lowestValueInDict(self, openSet, dic):
-        lowestVal = 9999999999999999
+        lowestVal = None
         lowestKey = ""
 
         for value in openSet:
             score = dic[value]
-            if score < lowestVal:
+            if score < lowestVal or lowestVal == None:
                 lowestKey = value
                 lowestVal = score
                 print(lowestKey.x, lowestKey.y)
@@ -111,21 +114,21 @@ class PathFind:
             
 
 
-    def array(self):
-        #make 5x5 array of 0's
-        Matrix = [[0 for x in range(self.bounds)] for x in range(self.bounds)] 
-        #add random objects
-        Matrix[0][3] = 1
-        Matrix[1][2] = 1
-        Matrix[4][4] = 1
-        Matrix[2][3] = 1
-        return Matrix
+def array(bounds):
+    #make 5x5 array of 0's
+    Matrix = [[0 for x in range(bounds)] for x in range(bounds)] 
+    #add random objects
+    Matrix[0][3] = 1
+    Matrix[1][2] = 1
+    Matrix[4][4] = 1
+    Matrix[2][3] = 1
+    return Matrix
     
 
 
 
 
-Path = PathFind()
-path = Path.A(node(0,0), node(4,3))
+Path = PathFind(array(5), 5)
+path = Path.AStar(node(0,0), node(4,3))
 for point in path:
     print(point.x, point.y)
