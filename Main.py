@@ -19,48 +19,23 @@
 """
 
 from kivy.app import App
-from kivy.uix.floatlayout import FloatLayout
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.core.window import Window
-from ItemManager import ItemManager
-from Rectangle import Rectangle
-from Entity import *
-from random import random
 from SettingsPanel import SettingsPanel
-from kivy.uix.button import *
-from Floor import Floor
+from Rectangle import Rectangle
 
-class Robot:
-	def __init__(self, position):
-		pass
-		
+from kivy.uix.button import *
+
 """ Main game class with game loop """
 
-class GameScreen(FloatLayout):
+class AppScreen(BoxLayout):
 	
-	def __init__(self, app):
-		super(GameScreen,self).__init__()
+	def __init__(self):
+		super(AppScreen,self).__init__(orientation = 'horizontal')
 		
-		# ADD BACKGROUND
-		self.floor = Floor()
-		self.floor.addToLayout(self)
 		
-		# LOAD ITEMS
-		self.itemManager = ItemManager("Databases/sql.db")
-		self.items = self.itemManager.getItems()
 		
-		self.settingsPanel = SettingsPanel(self)
-		
-	def loadItems(self):
-		pass
-	
-	def update(self, dt):
-		pass
-	
-	def on_touch_down(self, touch):
-		super(FloatLayout,self).on_touch_down(touch)
-	
 class BargainHuntApp(App):
 	def build(self):
 		self.root = GameScreen(self)

@@ -1,9 +1,11 @@
 from kivy.uix.scrollview import *
 from kivy.uix.gridlayout import *
 from kivy.uix.button import *
+from kivy.uix.boxlayout import *
 
-class SettingsPanel:
+class SettingsPanel(BoxLayout):
 	def __init__(self, root):
+
 		scrollView = self.createItemScrollView(None)
 		root.add_widget(scrollView)
 		
@@ -22,5 +24,8 @@ class SettingsPanel:
 	
 	def getSelectedItems():
 		pass
+	
+	def addToLayout(self, layout):
+		layout.add_widget(self)
 	
 	
