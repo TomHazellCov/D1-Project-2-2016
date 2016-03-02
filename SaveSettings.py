@@ -13,7 +13,7 @@ class SettingsManager:
         with open("Databases\Settings.json", 'r') as f:
              data = json.load(f)
              print(data)
-             prefs = prefsStore(data["StartLocation"], data["sortByValue"], data["sortByOrder"], data["algorithm"])
+             prefs = Settings(data["StartLocation"], data["sortByValue"], data["sortByOrder"], data["algorithm"])
              return prefs
             
 

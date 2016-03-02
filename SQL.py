@@ -6,7 +6,7 @@ import sys
 class SQLManager:
 	def __init__(self):
 		self.loaded = False
-		self.load("Databases/VRBH.db")
+		self.load("Databases/sql.db")
 	
 	def create(self):
 		self.con.execute("""CREATE TABLE 'items' (
@@ -25,7 +25,7 @@ class SQLManager:
 		self.cur = lite.connect(fname)
 		self.con = self.cur.cursor()
 		if not fexists:
-			self.makeDB()
+			self.create()
 
 	def close(self):
 		self.cur.close()

@@ -43,9 +43,6 @@ class Entity:
 	def setPosition(self, x, y):
 		self.bounds.setPosition(x,y)
 		self.sprite.setPosition(x,y)
-<<<<<<< HEAD
-		
-=======
 		
 class Background(Entity):
 	width = 800
@@ -87,5 +84,3 @@ class Item:
 	def __eq__(self, other): 
 		# whoever did this, is genius
 		return self.__dict__ == other.__dict__
-		
->>>>>>> bb69b7eb2de57ca9757a6f57f56a1ef424470237

@@ -17,5 +17,110 @@
 	You should have received a copy of the GNU General Public License
 	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
 """
+from Entity import Item
+from SQL import *
+from SaveSettings import *
 
-def fastSort(array, sortByPrice, 
+class Sorting:
+
+    def __init__(self):
+        self.loadFromSettings()
+    
+    def loadFromSettings(self):
+        settingsM = SettingsManager()
+        self.settings = settingsM.Load()
+
+    def Sort(self, itemArray):
+        ascending = False
+        sortByName = False
+        
+        if self.settings.sortByOrder == "Ascending":
+            ascending = True
+
+        if self.settings.sortByValue == "Name":
+            
+            sortByName = True
+            print(sortByName)
+
+        if self.settings.algorithm == "Bubble":
+            print(sortByName)
+            return self.bubbleSort(itemArray, ascending, sortByName)
+        
+        elif self.settings.algorithm == "Insertion":
+            return self.insertionSort(itemArray, ascending, sortByName)
+
+
+    def insertionSort(self, array, ascending, sortByName):
+        print("in")
+        if sortByName == True:
+            for i in range(1,len(array)):
+            #assigning the current value we are working with, i is it index(position)
+                
+                valueInArray = array[i]
+                index = i 
+
+                #While loop as I need a constional loop so it runs when two conditionas are met
+                
+                while (index > 0) and ((ascending == True and(array[index-1].itemName > valueInArray.itemName)) or (ascending == False and (array[index-1].itemName < valueInArray.itemName))):
+                #In an insertion sort algorithm runs when the index is greater
+                #0 and the element in the previous position is less than the
+                #current element we are looking at
+
+                    array[index] = array[index-1] #inserting element into new position in new array
+                    index = index - 1
+
+                array[index] = valueInArray
+            return array
+
+    
+    #if sortByName is false it sorts by price
+    def bubbleSort(self, alist, ascending, sortByName):
+        print(sortByName)
+        if sortByName == True:
+            if ascending == True:
+                print("na")
+                for i in range(len(alist)-1,0,-1):
+                    for j in range(i):
+                        if alist[j].itemName>alist[j+1].itemName:
+                            temp = alist[j]
+                            alist[j] = alist[j+1]
+                            alist[j+1] = temp
+                            
+            else:
+                print("nd")
+                for i in range(len(alist)-1,0,-1):
+                    for j in range(i):
+                        if alist[j].itemName<alist[j+1].itemName:
+                            temp = alist[j]
+                            alist[j] = alist[j+1]
+                            alist[j+1] = temp
+        elif sortByName == False:
+            if ascending == True:
+                print("pa")
+                for i in range(len(alist)-1,0,-1):
+                    for j in range(i):
+                        if alist[j].itemPrice>alist[j+1].itemPrice:
+                            temp = alist[j]
+                            alist[j] = alist[j+1]
+                            alist[j+1] = temp
+                            
+            else:
+                print("pd")
+                for i in range(len(alist)-1,0,-1):
+                    for j in range(i):
+                        if alist[j].itemPrice<alist[j+1].itemPrice:
+                            temp = alist[j]
+                            alist[j] = alist[j+1]
+                            alist[j+1] = temp
+        return alist
+
+db = SQLManager()
+list1 = db.getItems()
+s = Sorting()
+flist = s.Sort(list1)
+
+for i in flist:
+    print(i.itemName)
+
+#finishedList = s.bubbleSort(list1, True, True)
+
