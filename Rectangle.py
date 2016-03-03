@@ -68,7 +68,10 @@ class Rectangle:
 		return False
 	
 	def collided(self,other):
-		pass
+		if (self.bottomLeft.x+self.size.x<other.bottomLeft.x or other.bottomLeft.x+other.size.x<self.bottomLeft.x or self.bottomLeft.y+self.size.y<other.bottomLeft.y or other.bottomLeft.y+other.size.y<self.bottomLeft.y):
+			return False
+		else:
+			return True
 		
 	def __str__(self):
 		return "BottomLeft: " + self.bottomLeft + '\n' + \
