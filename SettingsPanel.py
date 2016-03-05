@@ -6,6 +6,8 @@ from kivy.uix.label import *
 from kivy.uix.checkbox import *
 from kivy.uix.floatlayout import *
 from kivy.uix.popup import *
+from kivy.uix.spinner import *
+from kivy.uix.textinput import *
 
 class ListItem(BoxLayout):
 	
@@ -28,6 +30,20 @@ class ListItem(BoxLayout):
 		
 	def checkboxCallback(self, checkbox, active):
 		self._checked = active
+		
+class NumberInput(TextInput):
+
+	def insert_text(self, substring, from_undo=False):
+		if(self.isDigit(substring)):
+			return super(NumberInput, self).insert_text(substring, from_undo=from_undo)
+	
+	def isDigit(self, string):
+		try:
+			int(string)
+			return True
+		except:
+			return False
+		
 			
 class SettingsPanel:
 	def __init__(self, game):
@@ -52,7 +68,7 @@ class SettingsPanel:
 		for item in self.listItems:
 			itemGrid.add_widget(item)
 		
-		scrollView = ScrollView(pos_hint = {"top" : 1}, size_hint = (1.0,0.4), bar_width = 4)
+		scrollView = ScrollView(pos_hint = {"top" : 1}, size_hint = (1.0,0.4), bar_width = 8, scroll_type = ['bars','content'])
 		scrollView.add_widget(itemGrid)
 		
 		self.addToPanel(scrollView)
@@ -60,11 +76,12 @@ class SettingsPanel:
 	def addSettingsView(self):
 		layout = FloatLayout(size_hint = (1.0, 0.6))
 		
-		self.addLabel(layout, "Sort By:", 0.5, 0.90)
-		
 		firstRowY = 0.85
-		secondRowY = 0.75
+		secondRowY = 0.750 
 		thirdRowY = 0.70
+		fourthRowY = 0.60
+		
+		self.addLabel(layout, "Sort By:", 0.5, 0.90)
 		
 		self.addLabel(layout, "NAME", 0.15, firstRowY)
 		self.addLabel(layout, "OR", 0.5, firstRowY)
@@ -77,7 +94,7 @@ class SettingsPanel:
 		self.checkbox.bind(active = self.priceCheckbox)
 		layout.add_widget(self.checkbox)
 		
-		self.addLabel(layout, "In order:", 0.5, secondRowY )
+		self.addLabel(layout, "IN", 0.5, secondRowY )
 		
 		self.addLabel(layout, "DESCEND", 0.85, thirdRowY )
 		self.addLabel(layout, "OR", 0.5, thirdRowY)
@@ -91,43 +108,48 @@ class SettingsPanel:
 		self.checkbox.bind(active = self.descendingCheckbox)
 		layout.add_widget(self.checkbox)
 		
-		self.addLabel(layout, "Sorting Algorithm", 0.5, 0.60)
-		
+		self.addLabel(layout, "USING", 0.5, fourthRowY)
 		
 		spinner = Spinner(
 			text='Sort algorithm...',
-			values=('', 'Work', 'Other', 'Custom'),
-			size_hint=(None, None),
+			values=('Insertion sort', 'Bubble sort'),
+			size_hint=(1.0, 0.1),
 			pos_hint={'center_x': .5, 'center_y': .5})
+		
+		spinner.sync_height = True
 
-		spinner.bind(text=show_selected_value)
+		spinner.bind(text=self.algorithmSelection)
+		layout.add_widget(spinner)
 		
 		button = Button(on_press = self.startButton, text = "START", pos_hint = {"center_x" : 0.5, "bottom" : 0.0}, size_hint = (1.0,0.1))
 		layout.add_widget(button)
 		
 		self.addToPanel(layout)
 		
-	def algorithmSelection(spinner, selection):
-		pass
+	
 		
 	def startButton(self, pressed):
 		error = None
 		
-		if(len(self.getSelectedItems()) < 5):
-			error = "Please select at least 5 items"
+		if(len(self.getSelectedItems()) < 1):
+			error = "Please select at least 1 item"
 		elif(self.game.settings.sortBy == None):
 			error = "Please select sorting criteria"
 		elif(self.game.settings.sortOrder == None):
 			error = "Please select sort order"
+		elif(self.game.settings.algorithm == None):
+			error = "Plese select sorting algorithm"
 		else:
 			self.game.start()
 			
 		if(error != None):
-			popup = Popup(title='Uh oh...',
-						content=Label(text=error),
-						size_hint=(None, None), size=(300, 200))
-			popup.open()
+			self.popup("Uh oh...", error)
 		
+	def popup(self, title, message):
+		popup = Popup(title=title,
+				content=Label(text=message),
+				size_hint=(None, None), size=(300, 200))
+		popup.open()
 		
 	def nameCheckbox(self, checkbox, active):
 		self.game.settings.sortBy = "name"
@@ -140,7 +162,11 @@ class SettingsPanel:
 	
 	def descendingCheckbox(self, checkbox, active):
 		self.game.settings.sortOrder = "descending"
-	
+		
+	def algorithmSelection(self, spinner, selection):
+		# only gets the name of the sort algorithm, without "sort" at the end.
+		self.game.settings.algorithm = selection.split(' ')[0]
+		
 	def addLabel(self, layout, text, x, y):
 		label = Label(text = text,
 						 font_size = "16sp", 

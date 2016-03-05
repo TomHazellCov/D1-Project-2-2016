@@ -1,11 +1,11 @@
 import sqlite3 as lite
-from Item import Item
+from Entities import Item
 import os.path
 
 class ItemManager:
 
-	def __init__(self, filename):
-		self.load(filename)
+	def __init__(self, databasePath):
+		self.load(databasePath)
 	
 	""" Creates an empty database """
 	def create(self):

@@ -24,23 +24,33 @@ from Error import *
 from Sprite import Sprite
 
 class Entity:
-	def __init__(self,x, y, sprite = None):
+	def __init__(self,x, y, width, height, sprite = None):
 		self.sprite = sprite
 		if(self.sprite != None and sprite != None):
 			self.sprite = sprite
 		else:
 			self.sprite = Sprite("Assets/default.png")
 
-		self.bounds = Rectangle(x,y,sprite.texture.size[0],sprite.texture.size[1])
+		self.bounds = Rectangle(x,y,width,height)
+		self.setSize(width, height)
 		self.setPosition(x,y)
 		
 	def addToLayout(self, layout):
 		layout.add_widget(self.sprite)
+		
+	def collided(self, other):
+		if(self.bounds.collided(other.bounds)):
+			return True
+		else:
+			return False
 
 	def setSprite(self, sprite):
 		self.sprite = sprite
 		
+	def setSize(self, width, height):
+		self.bounds.setSize(width, height)
+		self.sprite.setSize(width, height)
+		
 	def setPosition(self, x, y):
 		self.bounds.setPosition(x,y)
 		self.sprite.setPosition(x,y)
-		

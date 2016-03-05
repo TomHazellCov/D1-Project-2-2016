@@ -26,7 +26,6 @@ class Rectangle:
 	
 	def __init__(self, x,y,width,height):
 		self.bottomLeft = Vector(0,0)
-		self.topRight = Vector(0,0)
 		self.size = Vector(width,height)
 		self.center = Vector(0,0)
 		self.top = 0
@@ -37,12 +36,11 @@ class Rectangle:
 		
 	def recalculatePoints(self):
 		"""	Recalculates points based on bottomLeft and size attributes """
-		self.topRight = self.bottomLeft + self.size
 		self.center = Vector(self.bottomLeft + (self.size/2))
-		self.top = self.topRight.y
-		self.right = self.topRight.x
-		self.bottom = self.bottomLeft.y
-		self.left = self.bottomLeft.x
+		self.top = self.center.y + self.size.y/2
+		self.right = self.center.x + self.size.x/2
+		self.bottom = self.center.y - self.size.y/2
+		self.left =self.center.x - self.size.x/2
 		
 	def move(self, x,y):
 		self.bottomLeft += Vector(x,y)
@@ -68,13 +66,11 @@ class Rectangle:
 			return False
 	
 	def collided(self,other):
-		if(self.left < other.Right and self.right > other.left and self.top > other.bottom and self.bottom < other.top):
+		if(self.left < other.right and self.right > other.left and self.top > other.bottom and self.bottom < other.top):
 			return True
 		else:
 			return False
+
 		
 	def __str__(self):
-		return "BottomLeft: " + self.bottomLeft + '\n' + \
-			"TopRight: " + self.topRight + '\n' + \
-			"Center: " + self.center + '\n' + \
-			"Size: " + self.size + '\n'
+		return "X: " + str(self.center.x) + "Y: " + str(self.center.y)
