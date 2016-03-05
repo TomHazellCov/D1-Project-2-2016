@@ -1,27 +1,17 @@
 from ItemManager import ItemManager
 from kivy.uix.floatlayout import FloatLayout
+from Entities import *
 from random import random
 
 class GameScreen(FloatLayout):
 	
-	def __init__(self, root):
-		super(GameScreen,self).__init__()
+	def __init__(self, game):
+		super(GameScreen,self).__init__(size_hint = (0.75, 1))
+		self.game = game
 		
 		# ADD BACKGROUND
-		self.floor = Floor()
+		self.floor = FloorEntity()
 		self.floor.addToLayout(self)
 		
-		# LOAD ITEMS
-		self.itemManager = ItemManager("Databases/sql.db")
-		self.items = self.itemManager.getItems()
-		
-		self.settingsPanel = SettingsPanel(self)
-		
-	def loadItems(self):
-		pass
 	
-	def update(self, dt):
-		pass
 	
-	def on_touch_down(self, touch):
-		super(FloatLayout,self).on_touch_down(touch)

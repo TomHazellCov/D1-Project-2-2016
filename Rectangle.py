@@ -64,11 +64,14 @@ class Rectangle:
 	def pointInside(self,x,y):
 		if((x > self.left and x < self.right) and (y > self.top and y < self.bottom)):
 			return True
-			
-		return False
+		else:
+			return False
 	
 	def collided(self,other):
-		pass
+		if(self.left < other.Right and self.right > other.left and self.top > other.bottom and self.bottom < other.top):
+			return True
+		else:
+			return False
 		
 	def __str__(self):
 		return "BottomLeft: " + self.bottomLeft + '\n' + \

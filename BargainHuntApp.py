@@ -25,22 +25,21 @@ from kivy.core.window import Window
 from SettingsPanel import SettingsPanel
 from GameScreen import GameScreen
 from Game import Game
-from kivy.config import Config
 
-Config.set('graphics', 'width', '200')
-Config.set('graphics', 'height', '200')
+""" Main game class with game loop """
 
+# sort first, search second.
 class BargainHuntApp(App):
 	def build(self):
 		self.game = Game()
-	
+		
 		self.root = BoxLayout(orientation = 'horizontal')
-		self.root.add_widget(self.game.gameScreen)
+		self.root.add_widget(self.game.gameScreen )
 		self.root.add_widget(self.game.settingsPanel.layout)
 		
 		Clock.schedule_interval(self.game.update, 1.0 / 60.0)
 		
 		return self.root
 
-BargainHuntApp().run()
-
+if __name__ == '__main__':
+	BargainHuntApp().run()

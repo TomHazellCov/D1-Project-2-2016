@@ -84,7 +84,6 @@ class Example(QWidget):
 
             except:
                 QMessageBox.about(self, "Error", "One or more of the fields are blank/empty")
-
                 
                 return False
                 

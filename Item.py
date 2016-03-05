@@ -8,7 +8,7 @@ class Item(Entity):
 		self.id = id
 		self.name = name
 		self.type = type
-		self.itemPrice = price
+		self.price = price
 		self.qty = qty
 		self.wanted = wanted
 	
