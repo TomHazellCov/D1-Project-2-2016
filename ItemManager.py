@@ -43,5 +43,5 @@ class ItemManager:
 			#the list best always be in order
 			for i in range(len(itemList)):
 				if not itemList[i] == self.itemList[i]:
-					self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].itemName, itemList[i].itemType, itemList[i].itemPrice, itemList[i].itemQuantity, itemList[i].postionX, itemList[i].postitionY, itemList[i].itemIsWanted, itemList[i].itemNumber))
+					self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
 					self.cur.commit()

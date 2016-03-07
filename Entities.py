@@ -51,10 +51,11 @@ class Item(Entity):
 		self.type = type
 		self.price = price
 		self.qty = qty
+		self.wanted = wanted
 		
 	
 	def __str__(self):
-		return "Name: " + self.name + ", X: " + str(self.bounds.bottomLeft.x) + ", Y: " + str(self.bounds.bottomLeft.y)
+		return "Name: " + self.name + ", X: " + str(self.bounds.bottomLeft.x) + ", Y: " + str(self.bounds.bottomLeft.y) + str(self.id) + self.type + str(self.price) + str(self.qty) + self.wanted
 
 	def __eq__(self, other): 
 		return self.__dict__ == other.__dict__
