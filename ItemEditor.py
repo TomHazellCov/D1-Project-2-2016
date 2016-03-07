@@ -39,7 +39,6 @@ class Example(QWidget):
             self.Table.setItem(row, 0, row0)
             self.Table.setItem(row, 1, QTableWidgetItem(item.name))
             self.Table.setItem(row, 2, QTableWidgetItem(item.type))
-            print(item.price)
             self.Table.setItem(row, 3, QTableWidgetItem(str(item.price)))
             self.Table.setItem(row, 4, QTableWidgetItem(str(item.qty)))
             self.Table.setItem(row, 5, QTableWidgetItem(str(item.bounds.bottomLeft.x)))

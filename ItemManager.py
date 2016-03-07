@@ -5,6 +5,7 @@ import os.path
 class ItemManager:
 
 	def __init__(self, databasePath):
+		self.loaded = False
 		self.load(databasePath)
 	
 	""" Creates an empty database """
@@ -25,23 +26,33 @@ class ItemManager:
 		self.cur = lite.connect(fname)
 		self.con = self.cur.cursor()
 		if not fexists:
-			self.makeDB()
+			self.create()
 			
 	def close(self):
 		self.cur.close()
 
 	def getItems(self):
+		self.loaded = True
 		itemList = []
 		for row in self.con.execute("SELECT * FROM items"):
 			item = Item(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
 			itemList.append(item)
-			self.itemList = itemList
+		self.itemList = itemList
 		return itemList
-        
+
+
 	def setItems(self, itemList):
-		if len(itemList) == len(self.itemList):
-			#the list best always be in order
-			for i in range(len(itemList)):
-				if not itemList[i] == self.itemList[i]:
-					self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
-					self.cur.commit()
+		if self.loaded == False:
+			self.getItems()
+		
+		#the list best always be in order
+		for i in range(len(self.itemList)):
+			if not itemList[i] == self.itemList[i]:
+				self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
+				self.cur.commit()
+		if len(itemList) != len(self.itemList):
+			for i in range(len(self.itemList), len(itemList), 1):
+				self.con.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)",(itemList[i].id, itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted))
+				self.cur.commit()
+
+					
