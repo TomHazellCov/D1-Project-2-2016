@@ -1,6 +1,12 @@
 # Bargain Hunt
 Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazell, Alex Stacey
 
+
+Tom Hazell Individual part:
+GenarateItemList.py
+This fills the DB with popular items from tescos website.
+dependencys: bs4(pip), selenium(pip), PhantomJS(binery in path or wirking dir), kivy(installer), PyQt(installer)
+
 HOW TO USE GITHUB:
 
 If you want to submit a change you have to:
@@ -25,6 +31,7 @@ Required parts of the program:
 	Saveing settings(JSON)
 	
 	SortedListView(PyQt)
+	
 	
 
 -----------------------------IMPORTANT:-----------------------------
