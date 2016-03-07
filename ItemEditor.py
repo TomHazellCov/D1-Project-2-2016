@@ -115,7 +115,10 @@ class Example(QWidget):
         row0.setFlags(flags)
         
         self.Table.setItem(self.Table.rowCount() - 1, 0, row0)
-               
+
+    def closeEvent(self, event):
+        self.sql.close()
+        event.accept()
         
     def validate(self, item):
         
