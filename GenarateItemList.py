@@ -9,6 +9,9 @@ from bs4 import BeautifulSoup
 from threading import Thread
 import time
 
+"""Class is a worker thread that will callback to update its progress and an item list when done.
+It finds items from tescos website"""
+
 class ItemFetcher(Thread):
 
     def __init__(self, itemList, URLList, replaceItems, callback):
@@ -25,20 +28,24 @@ class ItemFetcher(Thread):
         if not self.replaceItems:
             items = list(self.itemList)
             nextId = items[-1].id + 1
+            
         self.callback("Starting Web Driver", False)
+        #phantomjs is the webdriver to avoid opening a webbrowser
         driver = webdriver.PhantomJS()
         driver.set_window_size(1120, 550)
 
+        #for each page of items
         for URL, Type in URLList:
             self.callback("Getting " + Type, False)
-            driver.get(URL)
+            driver.get(URL)#get webpage
             time.sleep(1)
-            # Locate the elements.
+            # pipe the html code into bs4
             soup = BeautifulSoup(driver.page_source, "html.parser")
-            #soup.find_all("div", class_="sister")
+            #find the list of popular elemets
             div = soup.find_all("div", class_="products-wrapper")[2]
             l = div.find_all("div", class_="product")
-            for i in l:              
+            for i in l:
+                #for each item fidn the price and name
                 name = i.find_all("div", class_="title-author-format")[0].getText().strip()
                 price = i.find_all("p", class_="price")[0].getText()
                 price = price.replace("£", "")
@@ -52,10 +59,11 @@ class ItemFetcher(Thread):
         self.callback("Done", False)
         self.callback(items, True)
 
-    #update to not be in an obstical
+    #given a random cordinate
     def randomCord(self):
         return random.uniform(0, 1)
 
+"""main PyQt UI class"""
 class GenarateItemsUi(QMainWindow):
     
     def __init__(self, parent = None):
@@ -92,10 +100,10 @@ class GenarateItemsUi(QMainWindow):
         btGo = QPushButton("Go")
         btGo.clicked.connect(self.buttonClicked)
 
-        #init grid layour and set min spacing betwen elements
+        #init layout
         vbox = QVBoxLayout()
 
-        #add all items to grid layout
+        #add all items to layout
         vbox.addWidget(self.lbTitle)
         vbox.addWidget(self.cbTec)
         vbox.addWidget(self.cbHomeElec)
@@ -119,7 +127,8 @@ class GenarateItemsUi(QMainWindow):
         #size and center window
         self.resize(300, 300)
         self.center()
-        
+
+        #set title and status
         self.setWindowTitle('Genarate Item List')
         self.statusBar().showMessage('Ready')
         
@@ -127,6 +136,7 @@ class GenarateItemsUi(QMainWindow):
     
 
     def buttonClicked(self):
+        #called when the button is clicked, gets a list of items, passes that and other arguments to the worker class
         itemMan = ItemManager("Databases/VRBH.db")
         items = itemMan.getItems()
         itemMan.close()
@@ -134,6 +144,7 @@ class GenarateItemsUi(QMainWindow):
         worker.start()
 
     def CallBack(self, data, finished):
+        #this is the callback for the worker class, is used to set the status or save item list
         if finished:
             db = ItemManager("Databases/VRBH.db")
             db.setItems(data)
@@ -142,6 +153,7 @@ class GenarateItemsUi(QMainWindow):
         
 
     def makeURLList(self):
+        #depending on what check boxes are ticked it makes a list of terples (URL, catagoryName)
         URLList = []
         if self.cbTec.isChecked():
             URLList.append(("http://www.tesco.com/direct/technology-gaming/?icid=technologygaming_viewall", "Technology & Gaming"))
@@ -170,16 +182,11 @@ class GenarateItemsUi(QMainWindow):
         return URLList
     
     def center(self):
-        
+        #centers the window on screen
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-
-    #def closeEvent(self, event):
-        #clean up
-        #self.itemMan.close()
-        #event.accept()
         
         
 if __name__ == '__main__':
