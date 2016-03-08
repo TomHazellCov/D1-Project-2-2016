@@ -6,20 +6,70 @@ from ItemManager import *
 from selenium import webdriver
 import random
 from bs4 import BeautifulSoup
+from threading import Thread
+import time
 
-class Example(QWidget):
+class ItemFetcher(Thread):
+
+    def __init__(self, itemList, URLList, replaceItems, callback):
+        Thread.__init__(self)
+        self.itemList = itemList
+        self.URLList = URLList
+        self.replaceItems = replaceItems
+        self.callback = callback
     
-    def __init__(self):
-        super().__init__()
+    def run(self):
+        URLList = self.URLList
+        items = []
+        nextId = 0
+        if not self.replaceItems:
+            items = list(self.itemList)
+            nextId = items[-1].id + 1
+        self.callback("Starting Web Driver", False)
+        driver = webdriver.PhantomJS()
+        driver.set_window_size(1120, 550)
+
+        for URL, Type in URLList:
+            self.callback("Getting " + Type, False)
+            driver.get(URL)
+            time.sleep(1)
+            # Locate the elements.
+            soup = BeautifulSoup(driver.page_source, "html.parser")
+            #soup.find_all("div", class_="sister")
+            div = soup.find_all("div", class_="products-wrapper")[2]
+            l = div.find_all("div", class_="product")
+            for i in l:              
+                name = i.find_all("div", class_="title-author-format")[0].getText().strip()
+                price = i.find_all("p", class_="price")[0].getText()
+                price = price.replace("£", "")
+                price = price.replace("\n", "")
+                price = price.replace("From", "")
+
+                items.append(Item(nextId, name, Type, float(price), 2, round(self.randomCord(), 3), round(self.randomCord(), 3), "Y"))
+
+                nextId = nextId + 1
+        driver.quit()
+        self.callback("Done", False)
+        self.callback(items, True)
+
+    #update to not be in an obstical
+    def randomCord(self):
+        return random.uniform(0, 1)
+
+class GenarateItemsUi(QMainWindow):
+    
+    def __init__(self, parent = None):
+        super(GenarateItemsUi, self).__init__(parent)
         
         self.initUI()
         
         
     def initUI(self):
-
+        #init instruction text
         self.lbTitle = QLabel('Tick the Catagorys you want to get Items from (From tesco.com)')
         self.lbOverWrite = QLabel('Do you want to replace the curent list of items or add to it')
-        
+
+        #init check boxes
         self.cbTec = QCheckBox('Technology & Gaming', self)
         self.cbTec.toggle()
         self.cbToys = QCheckBox('Toys', self)
@@ -38,73 +88,58 @@ class Example(QWidget):
         self.cbHealth.toggle()
         self.cbReplace = QCheckBox('Replace Current Items', self)
 
+        #init button and connect clicked event with buttonClicked method
         btGo = QPushButton("Go")
         btGo.clicked.connect(self.buttonClicked)
 
-        grid = QGridLayout()
-        grid.setSpacing(10)
-        
-        grid.addWidget(self.lbTitle, 1, 0, 1, 2)
-        grid.addWidget(self.cbTec, 2, 0)
-        grid.addWidget(self.cbHomeElec, 3, 0)
-        grid.addWidget(self.cbHome, 4, 0)
-        grid.addWidget(self.cbGarden, 5, 0)
-        grid.addWidget(self.cbSports, 6, 0)
-        grid.addWidget(self.cbEntertain, 7, 0)
-        grid.addWidget(self.cbHealth, 8, 0)
-        grid.addWidget(self.cbToys, 9, 0)
-        grid.addWidget(self.lbOverWrite, 10, 0, 1, 2)
-        grid.addWidget(self.cbReplace, 11, 0)
-        grid.addWidget(btGo, 12, 1)
-        
-        self.setLayout(grid) 
-        
-        self.setGeometry(300, 300, 350, 300)
-        self.setWindowTitle('Review')
+        #init grid layour and set min spacing betwen elements
+        vbox = QVBoxLayout()
 
-        self.itemMan = ItemManager("Databases/VRBH.db")
+        #add all items to grid layout
+        vbox.addWidget(self.lbTitle)
+        vbox.addWidget(self.cbTec)
+        vbox.addWidget(self.cbHomeElec)
+        vbox.addWidget(self.cbHome)
+        vbox.addWidget(self.cbGarden)
+        vbox.addWidget(self.cbSports)
+        vbox.addWidget(self.cbEntertain)
+        vbox.addWidget(self.cbHealth)
+        vbox.addWidget(self.cbToys)
+        vbox.addWidget(self.lbOverWrite)
+        vbox.addWidget(self.cbReplace)
+        vbox.addWidget(btGo)
+        vbox.addStretch(1)
+
+        #populate window
+        self.centralWidget = QWidget()
+        self.centralWidget.setLayout(vbox)
+
+        self.setCentralWidget(self.centralWidget)
+
+        #size and center window
+        self.resize(300, 300)
+        self.center()
+        
+        self.setWindowTitle('Genarate Item List')
+        self.statusBar().showMessage('Ready')
         
         self.show()
+    
 
     def buttonClicked(self):
-        URLList = self.makeURLList()
-        items = []
-        nextId = 0
-        if not self.cbReplace.isChecked():
-            items = list(self.itemMan.getItems())
-            nextId = items[-1].id + 1
-        driver = webdriver.PhantomJS()
-        driver.set_window_size(1120, 550)
+        itemMan = ItemManager("Databases/VRBH.db")
+        items = itemMan.getItems()
+        itemMan.close()
+        worker = ItemFetcher(list(items), self.makeURLList(), self.cbReplace.isChecked(), self.CallBack)
+        worker.start()
 
-
-        for URL, Type in URLList:
-            
-            driver.get(URL)
-            print("HERRE")
-            # Locate the elements.
-            soup = BeautifulSoup(driver.page_source, "html.parser")
-            #soup.find_all("div", class_="sister")
-            div = soup.find_all("div", class_="products-wrapper")[2]
-            l = div.find_all("div", class_="product")
-            for i in l:
-                print("i")
-                
-                name = i.find_all("div", class_="title-author-format")[0].getText().strip()
-                price = i.find_all("p", class_="price")[0].getText()
-                price = price.replace("£", "")
-                price = price.replace("\n", "")
-                price = price.replace("From", "")
-
-                items.append(Item(nextId, name, Type, float(price), 2, round(self.randomCord(), 3), round(self.randomCord(), 3), "Y"))
-
-                nextId = nextId + 1
-        driver.quit()
-        self.itemMan.setItems(items)
-        self.itemMan.close()
-
-        #update to not be in an obstical
-    def randomCord(self):
-        return random.uniform(0, 1)
+    def CallBack(self, data, finished):
+        if finished:
+            db = ItemManager("Databases/VRBH.db")
+            db.setItems(data)
+            return
+        self.statusBar().showMessage(data)
+        
 
     def makeURLList(self):
         URLList = []
@@ -133,12 +168,22 @@ class Example(QWidget):
             URLList.append(("http://www.tesco.com/direct/health-beauty/?icid=healthandbeauty_viewall", "Health & Beauty"))
 
         return URLList
-
+    
+    def center(self):
         
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+
+    #def closeEvent(self, event):
+        #clean up
+        #self.itemMan.close()
+        #event.accept()
         
         
 if __name__ == '__main__':
     
     app = QApplication(sys.argv)
-    ex = Example()
+    ex = GenarateItemsUi()
     sys.exit(app.exec_())
