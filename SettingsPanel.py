@@ -8,6 +8,7 @@ from kivy.uix.floatlayout import *
 from kivy.uix.popup import *
 from kivy.uix.spinner import *
 from kivy.uix.textinput import *
+from Logger import Logger
 
 class ListItem(BoxLayout):
 	
@@ -49,7 +50,7 @@ class SettingsPanel:
 	def __init__(self, game):
 		self.game = game
 		
-		self.layout = BoxLayout(orientation = "vertical", size_hint = (0.25,1.0))
+		self.layout = BoxLayout(orientation = "vertical", size_hint = (0.28,1.0))
 		
 		#  CREATE LIST ITEMS, FROM GAME ITEMS
 		self.items = game.itemManager.getItems()
@@ -126,8 +127,6 @@ class SettingsPanel:
 		
 		self.addToPanel(layout)
 		
-	
-		
 	def startButton(self, pressed):
 		error = None
 		
@@ -141,9 +140,12 @@ class SettingsPanel:
 			error = "Plese select sorting algorithm"
 		else:
 			self.game.start()
+			Logger.log(self.game.settings)
 			
 		if(error != None):
 			self.popup("Uh oh...", error)
+			
+		
 		
 	def popup(self, title, message):
 		popup = Popup(title=title,
@@ -152,20 +154,30 @@ class SettingsPanel:
 		popup.open()
 		
 	def nameCheckbox(self, checkbox, active):
-		self.game.settings.sortBy = "name"
+		if(active):
+			self.game.settings.sortBy = "name"
+		Logger.log("Sort by: " + self.game.settings.sortBy)
 		
 	def priceCheckbox(self, checkbox, active):
-		self.game.settings.sortBy = "price"
+		if(active):
+			self.game.settings.sortBy = "price"
+		Logger.log("Sort by: " + self.game.settings.sortBy)
 		
 	def ascendingCheckbox(self, checkbox, active):
-		self.game.settings.sortOrder = "ascending"
+		if(active):
+			self.game.settings.sortOrder = "ascending"
+		Logger.log("Sort order: " + self.game.settings.sortOrder)
 	
 	def descendingCheckbox(self, checkbox, active):
-		self.game.settings.sortOrder = "descending"
+		if(active):
+			self.game.settings.sortOrder = "descending"
+		Logger.log("Sort order: " + self.game.settings.sortOrder)
 		
 	def algorithmSelection(self, spinner, selection):
 		# only gets the name of the sort algorithm, without "sort" at the end.
 		self.game.settings.algorithm = selection.split(' ')[0]
+		Logger.log("Algorithm: " + self.game.settings.algorithm)
+		
 		
 	def addLabel(self, layout, text, x, y):
 		label = Label(text = text,
