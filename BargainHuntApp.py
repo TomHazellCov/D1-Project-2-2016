@@ -23,8 +23,8 @@ from kivy.clock import Clock
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from SettingsPanel import SettingsPanel
-from GameScreen import GameScreen
 from Game import Game
+from Map import Map
 
 """ Main game class with game loop """
 

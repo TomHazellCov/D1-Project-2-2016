@@ -1,6 +1,14 @@
 # Bargain Hunt
 Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazell, Alex Stacey
 
+TABLE OF CONTENTS:
+
+1) ABOUT
+2) HOW TO USE GITHUB
+3) NAMING CONVETNIONS
+
+
+
 HOW TO USE GITHUB:
 
 If you want to submit a change you have to:
@@ -10,37 +18,21 @@ If you want to submit a change you have to:
     3) COMMIT changes with an appropriate comment         (git commit)
     4) PUSH (upload to server) changes to server          (git push)
 	
-Required parts of the program:
 
-	Main Screen(robot's navigation, kivy)
-	
-	Robot Controler (telling the robot where to go and what to pick up)
-	
-	ItemEditor(PyQt)
-	
-	Settings(PyQt)
-	
-	SQL(for retreving/saving items)
-	
-	Saveing settings(JSON)
-	
-	SortedListView(PyQt)
-	
+-----------------------------NAMING CONVENTION:-----------------------------
 
------------------------------IMPORTANT:-----------------------------
+We need mutual agreement on naming conventions so that the could would look nicer and there would be less misunderstandings when using someone else's written code. If this is alright with everyone, we will using PIP8 naming conventions. As it is the standard way of writing python.
 
-We need mutual agreement on naming conventions so that the could would look nicer and there would be less misunderstandings when using someone else's written code. If this is alright with everyone, we will use this NAMING CONVENTION:
-
-1) Class names should always start with uppercase letter and each new word should start with uppercase letter:
+Class names:
+ Should always start with uppercase letter and each new word should start with uppercase letter:
 
     class VectorThing:
         __init__(self, x, y):
             self.x = x
             self.y = y
 	
-2) Method, function, variable, parameter and class attribute names should start with first lowercase letter and each new word should start with uppercase letter:
-
-        def methodName(self, argumentFirst, argumentSecond):
+Method, function names should all be in a lower case:
+        def method_name(self, argumentFirst, argumentSecond):
                 x = ...
                 y = ...
                 count = ...

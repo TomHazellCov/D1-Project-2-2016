@@ -2,18 +2,15 @@ from Entities import *
 from Global import *
 
 class Map:
-
     def __init__(self, game, filename):
         self.game = game
         self.entities = []
         self.items = []
-        self.nodesize = None
-        self.gridsize = None
+        self.gridsize = 18
+        self.nodesize = 1.0/self.gridsize
         self.loadFromFile(filename)
 
     def loadFromFile(self, filename):
-        self.gridsize = 18
-        self.nodesize = 1.0/18
         # read map data, convert it to int list
         file = open(filename)
         data = file.read()
@@ -33,9 +30,9 @@ class Map:
     def add_map_object(self, x, y, entity_id):
         self.add_entity(x, y, entity_id, self.entities)
 
-    def add_entity(self, x, y, id, list):
-        entity = Entity((x*self.nodeSize)/GAME_SCR_WIDTH, y*self.nodeSize, id)
-        entity.move(0, -self.nodeSize/GAME_SCR_HEIGHT)
-        list.append(entity)
+    def add_entity(self, x, y, id, container):
+        entity = Entity(x/GAME_SCR_WIDTH, y/GAME_SCR_WIDTH, id)
+        entity.move(0, -self.nodesize/GAME_SCR_HEIGHT)
+        container.append(entity)
         entity.addToLayout(self.game.gameScreen)
 

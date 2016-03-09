@@ -25,29 +25,28 @@ class Rectangle:
 	""" IMPORTANT: Use given methods to change attributes, do NOT change directly. """
 	
 	def __init__(self, x,y,width,height):
-		self.bottomLeft = Vector(0,0)
+		self.position = Vector(x, y)
 		self.size = Vector(width,height)
-		self.center = Vector(0,0)
-		self.top = 0
-		self.bottom = 0
-		self.left = 0
-		self.right = 0
-		self.setPosition(x,y)
+		self.center = Vector(x+width/2.0,y+height/2.0)
+		self.top = self.center.y + self.size.y/2.0
+		self.right = self.center.x + self.size.x/2.0
+		self.bottom = self.center.y - self.size.y/2.0
+		self.left = self.center.x - self.size.x/2.0
 		
 	def recalculatePoints(self):
 		"""	Recalculates points based on bottomLeft and size attributes """
-		self.center = Vector(self.bottomLeft + (self.size/2))
+		self.center = Vector(self.position + (self.size / 2))
 		self.top = self.center.y + self.size.y/2
 		self.right = self.center.x + self.size.x/2
 		self.bottom = self.center.y - self.size.y/2
-		self.left =self.center.x - self.size.x/2
+		self.left = self.center.x - self.size.x/2
 		
 	def move(self, x,y):
-		self.bottomLeft += Vector(x,y)
+		self.position += Vector(x, y)
 		self.recalculatePoints()
 		
 	def setPosition(self, x, y):
-		self.bottomLeft = Vector(x,y)	
+		self.position = Vector(x, y)
 		self.recalculatePoints()
 		
 	def setSize(self,width,height):
@@ -65,7 +64,7 @@ class Rectangle:
 		else:
 			return False
 	
-	def collided(self,other):
+	def intersects(self,other):
 		if(self.left < other.right and self.right > other.left and self.top > other.bottom and self.bottom < other.top):
 			return True
 		else:

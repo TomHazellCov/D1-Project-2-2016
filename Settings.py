@@ -9,7 +9,10 @@ class Settings:
 		self.algorithm = None
 		self.sortBy = None
 		self.sortOrder = None
-		self.time = None
+		self.time = 60
+		
+	def __str__(self):
+		return "Algorithm: " + self.algorithm + '\n' + "Sort by: " + self.sortBy + "\n" + "Order: " + self.sortOrder + '\n' + "Time: " + str(self.time)
 		
 	def allSet(self):
 		if(self.algorithm != None and self.sortBy != None and self.sortOrder != None and self.time != None):
