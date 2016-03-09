@@ -64,7 +64,6 @@ class Entity:
 
 
 class Robot(Entity):
-
     def __init__(self, x, y):
         super(Robot, self).__init__(0,0,0)
         self.moving = False
@@ -89,7 +88,6 @@ class Item(Entity):
         self.type = type
         self.price = price
         self.qty = qty
-
 
     def __str__(self):
         return "Name: " + self.name + ", X: " + str(self.bounds.position.x) + ", Y: " + str(self.bounds.position.y)
