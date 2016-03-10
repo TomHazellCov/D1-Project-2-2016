@@ -41,8 +41,8 @@ class Example(QWidget):
             self.Table.setItem(row, 2, QTableWidgetItem(item.type))
             self.Table.setItem(row, 3, QTableWidgetItem(str(item.price)))
             self.Table.setItem(row, 4, QTableWidgetItem(str(item.qty)))
-            self.Table.setItem(row, 5, QTableWidgetItem(str(item.bounds.bottomLeft.x)))
-            self.Table.setItem(row, 6, QTableWidgetItem(str(item.bounds.bottomLeft.y)))
+            self.Table.setItem(row, 5, QTableWidgetItem(str(item.bounds.position.x)))
+            self.Table.setItem(row, 6, QTableWidgetItem(str(item.bounds.position.y)))
             self.Table.setItem(row, 7, QTableWidgetItem(item.wanted))
             row = row + 1
 
@@ -133,10 +133,10 @@ class Example(QWidget):
         if item.qty == "" or not self.isNumeric(item.qty):
             return "an item quantity is not numeric"
         
-        if item.bounds.bottomLeft.x == "" or not self.isNumeric(item.bounds.bottomLeft.x):
+        if item.bounds.position.x == "" or not self.isNumeric(item.bounds.position.x):
             return "an items position X is not numeric"
         
-        if item.bounds.bottomLeft.y == "" or not self.isNumeric(item.bounds.bottomLeft.y):
+        if item.bounds.position.y == "" or not self.isNumeric(item.bounds.position.y):
             return "an items position Y is not numeric"
         
         if item.wanted == "" or not self.isBool(item.wanted):

@@ -20,7 +20,7 @@
 
 from Sprite import Sprite
 from kivy.vector import Vector
-from rectangle import Rectangle
+from Rectangle import Rectangle
 
 class Entity:
     # image file locations in filesystem, list item id number == entity id number
@@ -88,6 +88,7 @@ class Item(Entity):
         self.type = type
         self.price = price
         self.qty = qty
+        self.wanted = wanted
 
     def __str__(self):
         return "Name: " + self.name + ", X: " + str(self.bounds.position.x) + ", Y: " + str(self.bounds.position.y)
