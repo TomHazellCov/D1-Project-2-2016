@@ -30,7 +30,7 @@ class ItemManager:
 			
 	def close(self):
 		self.cur.close()
-
+        """Load all items from DB and return a list of items"""
 	def getItems(self):
 		self.loaded = True
 		itemList = []
@@ -40,19 +40,27 @@ class ItemManager:
 		self.itemList = itemList
 		return itemList
 
-
+        """used to add or change items in the DB"""
 	def setItems(self, itemList):
 		if self.loaded == False:
 			self.getItems()
 		
-		#the list best always be in order
-		for i in range(len(self.itemList)):
-			if not itemList[i] == self.itemList[i]:
-				self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
-				self.cur.commit()
-		if len(itemList) != len(self.itemList):
-			for i in range(len(self.itemList), len(itemList), 1):
-				self.con.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)",(itemList[i].id, itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted))
-				self.cur.commit()
+		#if new list is larger or same size, use update for all existing itesm if they have changed and add all new items
+                if self.itemList <= itemList:
+                        for i in range(len(self.itemList)):
+                                if not itemList[i] == self.itemList[i]:
+                                        self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
+                                        self.cur.commit()
+                        if len(itemList) != len(self.itemList):
+                                for i in range(len(self.itemList), len(itemList), 1):
+                                        self.con.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)",(itemList[i].id, itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted))
+                                        self.cur.commit()
+                else:
+                        #if item new list is smaller than old list then remove all items and re add them all
+                        self.con.execute("DELETE FROM Customers;")
+                        self.cur.commit()
+                        for i in range(len(itemList)):
+                                self.con.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)",(itemList[i].id, itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted))
+                                self.cur.commit()
 
 					
