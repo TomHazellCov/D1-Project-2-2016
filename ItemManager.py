@@ -46,7 +46,7 @@ class ItemManager:
 			self.getItems()
 		
 		#if new list is larger or same size, use update for all existing itesm if they have changed and add all new items
-		if self.itemList <= itemList:
+		if len(self.itemList) <= len(itemList):
 			for i in range(len(self.itemList)):
 				if not itemList[i] == self.itemList[i]:
 					self.con.execute("UPDATE items SET itemName=?, itemType=?, itemPrice=?, itemQuantity=?, itemVectorX=?, itemVectorY=?, itemRequestedYN=? WHERE itemNumber=?",(itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted, itemList[i].id))
@@ -57,7 +57,7 @@ class ItemManager:
 					self.cur.commit()
 		else:
 			#if item new list is smaller than old list then remove all items and re add them all
-			self.con.execute("DELETE FROM Customers;")
+			self.con.execute("DELETE FROM items;")
 			self.cur.commit()
 			for i in range(len(itemList)):
 				self.con.execute("INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?)",(itemList[i].id, itemList[i].name, itemList[i].type, itemList[i].price, itemList[i].qty, itemList[i].bounds.bottomLeft.x, itemList[i].bounds.bottomLeft.y, itemList[i].wanted))
