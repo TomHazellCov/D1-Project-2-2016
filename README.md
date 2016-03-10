@@ -10,6 +10,11 @@ If you want to submit a change you have to:
     3) COMMIT changes with an appropriate comment         (git commit)
     4) PUSH (upload to server) changes to server          (git push)
 	
+
+Tom Hazell Individual part: GenarateItemList.py: This fills the DB with popular items from tescos website. 
+Tested with python version 3.4, should work with any version 3.3+
+Dependencys: bs4(pip), selenium(pip), PhantomJS(binery in path or wirking dir), kivy(installer), PyQt(installer)
+	
 Required parts of the program:
 
 	Main Screen(robot's navigation, kivy)
