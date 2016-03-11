@@ -4,10 +4,17 @@ Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazel
 TABLE OF CONTENTS:
 
 1) ABOUT
-2) HOW TO USE GITHUB
-3) NAMING CONVETNIONS
+2) DEPENDENCIES
+3) HOW TO USE GITHUB
+4) NAMING CONVETNIONS
 
+ABOUT:
+The object of this program is that it will create a vertual shopper robot. 
+This contains a robot that needs to navigate a map picking up items selected by the user. Then it will sort them and output the picked up items to the user.
 
+DEPENDENCIES:
+Kivy for the main app
+PyQt 5 for the tools.
 
 HOW TO USE GITHUB:
 
