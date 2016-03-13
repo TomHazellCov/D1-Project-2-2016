@@ -65,6 +65,7 @@ class SortingManager:
                     index = index - 1
 
                 array[index] = valueInArray
+            return array
         elif sortByName == False:
             for i in range(1,len(array)):
             #assigning the current value we are working with, i is it index(position)
