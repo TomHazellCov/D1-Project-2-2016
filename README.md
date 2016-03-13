@@ -1,12 +1,23 @@
 # Bargain Hunt
 Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazell, Alex Stacey
 
+ADDITIONAL FEATURES:
+
+Edvinas Kilbauskas - Support for touchscreen devices (Android, iOS, windows). Using Buildozer code can be compiled and .apk or .ipa for both Android and iOS can be generated (with no additional programming required)/
+Hend Almalik - Support for sounds
+
+	
+
 TABLE OF CONTENTS:
 
 1) ABOUT
+
 2) DEPENDENCIES
+
 3) HOW TO USE GITHUB
+
 4) NAMING CONVETNIONS
+
 
 ABOUT:
 The object of this program is that it will create a vertual shopper robot. 
