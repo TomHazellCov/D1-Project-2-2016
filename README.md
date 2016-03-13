@@ -3,7 +3,9 @@ Developed by: Edvinas Kilbauskas, Zac Davies, Kelly Sam, Hend Almalik, Tom Hazel
 
 ADDITIONAL FEATURES:
 
-	Edvinas Kilbauskas - Support for touchscreen devices (Android, iOS, windows, linux). Using Buildozer code can be compiled and .apk or .ipa for both Android and iOS can be generated (with no additional programming required)
+	Edvinas Kilbauskas - Support for touchscreen devices (Android, iOS, windows, linux).
+	Using Buildozer code can be compiled and .apk or .ipa for both Android and iOS can be generated
+	(with no additional programming required)
 
 	Hend Almalik - Support for sounds
 	
@@ -13,7 +15,8 @@ ADDITIONAL FEATURES:
 
 ABOUT:
 The object of this program is that it will create a vertual shopper robot. 
-This contains a robot that needs to navigate a map picking up items selected by the user. Then it will sort them and output the picked up items to the user.
+This contains a robot that needs to navigate a map picking up items selected by the user.
+Then it will sort them and output the picked up items to the user.
 
 DEPENDENCIES:
 Python 3
