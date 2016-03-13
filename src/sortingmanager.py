@@ -18,7 +18,6 @@
 	along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
 """
 
-
 class SortingManager:
     """
         Manages sorting
