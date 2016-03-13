@@ -176,30 +176,28 @@ class SettingsPanel:
         pass
 
     def nameCheckbox(self, checkbox, active):
+        self.game.soundmanager.click.play()
         if(active):
             self.game.settings.sortBy = "name"
-        Logger.log("Sort by: " + self.game.settings.sortBy)
 
     def priceCheckbox(self, checkbox, active):
+        self.game.soundmanager.click.play()
         if(active):
             self.game.settings.sortBy = "price"
-        Logger.log("Sort by: " + self.game.settings.sortBy)
 
     def ascendingCheckbox(self, checkbox, active):
+        self.game.soundmanager.click.play()
         if(active):
             self.game.settings.sortOrder = "ascending"
-        Logger.log("Sort order: " + self.game.settings.sortOrder)
 
     def descendingCheckbox(self, checkbox, active):
+        self.game.soundmanager.click.play()
         if(active):
             self.game.settings.sortOrder = "descending"
-        Logger.log("Sort order: " + self.game.settings.sortOrder)
 
     def algorithmSelection(self, spinner, selection):
         # only gets the name of the sort algorithm, without "sort" at the end.
         self.game.settings.algorithm = selection.split(' ')[0]
-        Logger.log("Algorithm: " + self.game.settings.algorithm)
-
 
     def addLabel(self, layout, text, x, y):
         """
