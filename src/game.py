@@ -54,7 +54,7 @@ class Game:
                 self.end()
 
             if(self.robot.moving == False):
-                if(self.node_id >= len(self.path)):
+                if(len(self.path) == 0):
                     self.end()
                 else:
                     node = self.path[self.node_id]
