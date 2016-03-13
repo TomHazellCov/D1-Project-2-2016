@@ -48,6 +48,7 @@ class Pathfinding:
             openSet.remove(current)
             closedSet.append(current)
 
+            # gets node neighbours 
             neighbors = []
             if current.x > 0:
                 if matrix[current.x -1][current.y] == 0:
@@ -55,14 +56,13 @@ class Pathfinding:
             if current.y > 0:
                 if matrix[current.x][current.y - 1] == 0:
                     neighbors.append(Node(current.x, current.y - 1))
-
             if current.x != bounds_x - 1:
                 if matrix[current.x + 1][current.y] == 0:
                         neighbors.append(Node(current.x + 1, current.y))
-
             if current.y != bounds_y - 1:
                 if matrix[current.x][current.y + 1] == 0:
                         neighbors.append(Node(current.x, current.y + 1))
+            
             for neighbor in neighbors:
                 if self.contains(closedSet, neighbor):
                     continue
@@ -83,7 +83,7 @@ class Pathfinding:
         return False
 
     #takes a node:start positon, items an array of nodes
-    #returns 2 items: chosen goal, path toget there (out put from AStar(...))
+    #returns 2 items: chosen goal, path to get there (out put from AStar(...))
     def closest_node(self, start, goals):
         lowestGoal = None
         lowestPath = ""
