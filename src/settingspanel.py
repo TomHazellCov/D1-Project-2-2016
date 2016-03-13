@@ -159,7 +159,7 @@ class SettingsPanel:
         """
         title = "Sorting results!"
 
-        message = "Time taken: " + str("%.2f" % self.game.time) + " seconds (out of " + str("%.2f" % self.game.settings.time) + " seconds )\n"
+        message = "Time taken: " + str("%.2f" % self.game.time) + " seconds (out of " + str("%.2f" % self.game.settings.time) + " seconds)\n"
         message += "Items sorted by " + self.game.settings.sortBy.upper() + " in " + self.game.settings.sortOrder.upper() + " order using " + self.game.settings.algorithm.upper() + " SORT:\n\n"
 
         i = 1

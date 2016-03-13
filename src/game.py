@@ -43,6 +43,7 @@ class Game:
         """
         self.running = True
         self.picked_items = []
+        self.time = 0
         #remove all previous items (if the game was ran before)
         for item in self.map.items:
             self.map.remove_item(item)
@@ -88,6 +89,7 @@ class Game:
     def end(self):
         # called when game should be stopped
         self.running = False
+        self.picked_items = self.sortingManager.sort(self.picked_items)
         self.settingsPanel.show_results()
 
     def update_pick_item(self):
