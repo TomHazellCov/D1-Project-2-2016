@@ -26,12 +26,20 @@ from globals import *
 
 
 class BargainHuntApp(App):
-
+    """
+        Main app class
+    """
     def build(self):
+        """
+            Creates root widget and adds gamescreen and settings panel to in
+        :return:
+        """
         self.game = Game()
         self.root = BoxLayout(orientation = 'horizontal')
         self.root.add_widget(self.game.gameScreen)
         self.root.add_widget(self.game.settingsPanel.layout)
+
+        # sets frame limit
         Clock.schedule_interval(self.game.update, 1.0 / FPS_LIMIT)
 
         return self.root

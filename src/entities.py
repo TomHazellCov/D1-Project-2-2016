@@ -24,6 +24,9 @@ from kivy.uix.image import Image
 from rectangle import Rectangle
 
 class Entity:
+    """
+    Game entity which can by a map object, item, robot etc.
+    """
     # image file locations in filesystem, list item id number == entity id number
     # default = 0
     # floor = 1
@@ -44,6 +47,7 @@ class Entity:
                       "../Assets/forklift_down.png",
                       "../Assets/forklift_left.png"]
 
+    # image sizes are normalized to range [0,1]
     imageSizes = [Vector(32/GAME_SCREEN_WIDTH,32/GAME_SCREEN_HEIGHT),
                   Vector(GAME_SCREEN_WIDTH/GAME_SCREEN_WIDTH,GAME_SCREEN_WIDTH/GAME_SCREEN_HEIGHT),
                   Vector(32/GAME_SCREEN_WIDTH,32/GAME_SCREEN_HEIGHT),
@@ -56,8 +60,6 @@ class Entity:
                   Vector(48/GAME_SCREEN_WIDTH,48/GAME_SCREEN_HEIGHT)]
 
     def __init__(self,x, y, id):
-        # normalizing coordiantes to fit [0,1) screen range
-
         self.sprite = Image(source=self.imageLocations[id])
         self.sprite.allow_stretch = True
         self.sprite.auto_bring_to_front = False
@@ -67,6 +69,10 @@ class Entity:
         self.setPosition(x,y)
 
     def addToLayout(self, layout):
+        """
+        :param layout: Adds widget to specified layout
+        :return:
+        """
         layout.remove_widget(self.sprite)
         layout.add_widget(self.sprite)
 

@@ -11,7 +11,6 @@ class Map:
         self.nodesize_y = 1.0/18.0
         self.entities = []
         self.items = []
-        self.collisionmap = [[0 for y in range(self.gridsize_y+1)] for x in range(self.gridsize_x+1)]
 
         background = Entity(0.5,0.5,1)
         background.addToLayout(self.game.gameScreen)
@@ -31,54 +30,52 @@ class Map:
 
         for y in range(self.gridsize_y):
             for x in range(self.gridsize_x):
+                # go through the data, and add appropriate entities to the map
                 id = int(data.pop(0))
                 if id != 0:
                     self.add_map_object(x, y, id)
 
-    def add_item(self, grid_x, grid_y, entity_id):
-        """
-        Add item to the map
-        :param grid_x: item x position in grid
-        :param grid_y: item y position in grid
-        :param entity_id: id of the entity
-        :return: nothing
-        """
-        self.add_entity(grid_x*self.nodesize_x, grid_y*self.nodesize_y, entity_id, self.items)
+    def add_item(self, grid_x, grid_y, item):
+        item.setPosition((grid_x*self.nodesize_x)+self.nodesize_x/2.0, (grid_y*self.nodesize_y)+self.nodesize_y/2.0)
+        self.items.append(item)
+        item.addToLayout(self.game.gameScreen)
 
     def add_map_object(self, grid_x, grid_y, entity_id):
-        self.add_entity(grid_x*self.nodesize_x, grid_y*self.nodesize_y, entity_id, self.entities)
+        entity = Entity((grid_x*self.nodesize_x)+self.nodesize_x/2.0, (grid_y*self.nodesize_y)+self.nodesize_y/2.0,  entity_id)
+        self.entities.append(entity)
+        entity.addToLayout(self.game.gameScreen)
 
     def create_collision_map(self):
+        """
+            Creates a 2D collision map for the A* sorting algorithm
+        :return: 2D (size [gridsize_x][gridsize_y]) list with integers.
+        """
+        collisionmap = [[0 for y in range(self.gridsize_y+1)] for x in range(self.gridsize_x+1)]
         for y in range(self.gridsize_y):
             for x in range(self.gridsize_x):
                 node_bounds = Rectangle((x*self.nodesize_x)+(self.nodesize_x/2.0),(y*self.nodesize_y)+(self.nodesize_y/2.0),self.nodesize_x*0.9,self.nodesize_y*0.9)
 
                 for entity in self.entities:
                     if node_bounds.overlaps(entity.bounds):
-                        self.collisionmap[x][y] = 1
+                        collisionmap[x][y] = 1
 
-                print(self.collisionmap[x][y], end='')
+                print(collisionmap[x][y], end='')
             print('')
 
-
-        return self.collisionmap
-
-    def debug(self):
-        for i in self.entities:
-            print(i)
+        return collisionmap
 
     def remove_item(self, item):
+        """
+            Removes an item from the map
+        :param item: item to be removed
+        :return: nothing
+        """
         for i, o in enumerate(self.items):
             if o == item:
                 del self.items[i]
                 break
 
+        # remove the visual representation of the item from the gamescreen
         self.game.gameScreen.remove_widget(item.sprite)
 
-    def world_to_grid(self, x, y):
-        return Vector(x*self.gridsize_x, y*self.gridsize_y)
 
-    def add_entity(self, x, y, id, list):
-        entity = Entity(x+self.nodesize_x/2.0, y+self.nodesize_y/2.0,  id)
-        list.append(entity)
-        entity.addToLayout(self.game.gameScreen)

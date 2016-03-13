@@ -19,8 +19,15 @@
 """
  
 class Logger:
+    # Simple logger for debugging\
+
+    # logging is enabled if this variable is set to True
     debug = True
 
     def log(message):
+        """
+            Prints a message to the screen.
+        :return: nothing
+        """
         if(Logger.debug == True):
             print(message)

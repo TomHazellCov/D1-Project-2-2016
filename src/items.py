@@ -3,6 +3,7 @@ from entities import Item
 import os.path
 
 class ItemManager:
+    """ Load items from SQL database """
 
 	def __init__(self, databasePath):
 		self.loaded = False
