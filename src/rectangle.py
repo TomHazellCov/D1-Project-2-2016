@@ -77,17 +77,36 @@ class Rectangle:
         self.recalculatePoints()
 
     def set(self,x,y,width,height):
+        """
+        resets the rectangle data
+        :param x: center x
+        :param y: center y
+        :param width: width of the rectangle
+        :param height: height of the rectnalge
+        :return:
+        """
+
         self.setPosition(x,y)
         self.setSize(width,height)
         self.recalculatePoints()
 
     def pointInside(self,x,y):
+        """
+        checks wheter the point is inside rectangle's bounds
+        :param x:
+        :param y:
+        :return:
+        """
         if((x > self.left and x < self.right) and (y > self.top and y < self.bottom)):
             return True
         else:
             return False
 
     def overlaps(self,other):
+        """
+        :param other: rectangle to check againts
+        :return:
+        """
         if(self.left >= other.right or self.right <= other.left or self.top >= other.bottom or self.bottom <= other.top):
             return False
         else:

@@ -14,7 +14,9 @@ from kivy.uix.slider import Slider
 from kivy.properties import *
 
 class ListItem(BoxLayout):
-
+    """
+        Represents an item in the scrollable list
+    """
     def __init__(self, item):
         super(ListItem,self).__init__(orientation = 'horizontal', size_hint_y=None, height=30)
         self.nameLabel = Label(text=item.name, size_hint = (0.65, 1.0), pos_hint = {"left" : 0}, halign = "left")
@@ -30,32 +32,20 @@ class ListItem(BoxLayout):
         self.add_widget(self.checkbox)
 
     def isChecked(self):
+        # returns true if item is selected (checkBox is ticked)
         return self._checked
 
     def checkboxCallback(self, checkbox, active):
         self._checked = active
 
-class NumberInput(TextInput):
-
-    def insert_text(self, substring, from_undo=False):
-        if(self.isDigit(substring)):
-            return super(NumberInput, self).insert_text(substring, from_undo=from_undo)
-
-    def isDigit(self, string):
-        try:
-            int(string)
-            return True
-        except:
-            return False
-
 
 class SettingsPanel:
+    """
+        Representation of Settings panel
+    """
     def __init__(self, game):
         self.game = game
-
         self.layout = BoxLayout(orientation = "vertical", size_hint = (PANEL_WIDTH/SCREEN_WIDTH,1.0))
-
-        #  CREATE LIST ITEMS, FROM GAME ITEMS
         self.items = game.itemManager.getItems()
         self.listItems = []
         for item in self.items:
@@ -65,21 +55,25 @@ class SettingsPanel:
         self.addSettingsView()
 
     def addItemScrollView(self):
-        # creates a scrollable widget with game items, and adds it to the SettingsPanel layout
+        """
+            creates a scrollable widget with game items, and adds it to the SettingsPanel layout
+        """
         itemGrid = GridLayout(cols=1, spacing=0, size_hint_y = None)
         itemGrid.bind(minimum_height=itemGrid.setter('height'))
-
         for item in self.listItems:
             itemGrid.add_widget(item)
-
         scrollView = ScrollView(pos_hint = {"top" : 1}, size_hint = (1.0,0.4), bar_width = 8, scroll_type = ['bars','content'])
         scrollView.add_widget(itemGrid)
-
         self.addToPanel(scrollView)
 
     def addSettingsView(self):
+        """
+            creates settings view and adds it to SettingsPanel layout
+        :return:
+        """
         layout = FloatLayout(size_hint = (1.0, 0.6))
 
+        # item position Y coordinates
         firstRowY = 0.85
         secondRowY = 0.750
         thirdRowY = 0.70
@@ -100,15 +94,12 @@ class SettingsPanel:
         self.checkbox = CheckBox(pos_hint = {"center_x" : 0.370, "center_y" : firstRowY}, size_hint = (0.1, 0.1))
         self.checkbox.bind(active = self.nameCheckbox)
         layout.add_widget(self.checkbox)
-
         self.checkbox = CheckBox(pos_hint = {"center_x" : 1-0.370, "center_y" : firstRowY}, size_hint = (0.1, 0.1))
         self.checkbox.bind(active = self.priceCheckbox)
         layout.add_widget(self.checkbox)
-
         self.checkbox = CheckBox(pos_hint = {"center_x" : 0.370, "center_y" : thirdRowY}, size_hint = (0.1, 0.1))
         self.checkbox.bind(active = self.ascendingCheckbox)
         layout.add_widget(self.checkbox)
-
         self.checkbox = CheckBox(pos_hint = {"center_x" : 1-0.370, "center_y" : thirdRowY}, size_hint = (0.1, 0.1))
         self.checkbox.bind(active = self.descendingCheckbox)
         layout.add_widget(self.checkbox)
@@ -118,14 +109,11 @@ class SettingsPanel:
             values=('Insertion sort', 'Bubble sort'),
             size_hint=(1.0, 0.1),
             pos_hint={'center_x': .5, 'center_y': .5})
-
         spinner.bind(text=self.algorithmSelection)
         layout.add_widget(spinner)
-
         button = Button(on_press=self.startButton, text="START", pos_hint={"center_x":0.5, "bottom":0.0}, size_hint=(1.0,0.1))
         layout.add_widget(button)
-
-        slider = Slider(min= 0, max= 120, value=0, pos_hint = {"center_x" : 0.5, "center_y" : 0.3}, size_hint=(1.0,0.2))
+        slider = Slider(min= 0, max= 60, step=1, value=0, pos_hint = {"center_x" : 0.5, "center_y" : 0.3}, size_hint=(1.0,0.2))
         slider.bind(value=self.slider)
         layout.add_widget(slider)
 
@@ -151,19 +139,36 @@ class SettingsPanel:
             Logger.log(self.game.settings)
 
         if(error != None):
-            self.popup("Uh oh...", error)
+            self.popup("Uh oh...", error, 300, 200)
 
-    def popup(self, title, message):
+    def popup(self, title, message, width, height):
+        """
+            creates a popup message
+        :param title: Title of the message
+        :param message: Message of the... message
+        :return:
+        """
         popup = Popup(title=title,
                 content=Label(text=message),
-                size_hint=(None, None), size=(300, 200))
+                size_hint=(None, None), size=(width, height))
         popup.open()
 
-    def popup(self, title, message):
-        popup = Popup(title=title,
-                content=Label(text=message),
-                size_hint=(None, None), size=(300, 200))
-        popup.open()
+    def show_results(self):
+        """
+            prints sorting results on popup screen
+        """
+        title = "Sorting results!"
+
+        message = "Time taken: " + str("%.2f" % self.game.time) + " seconds (out of " + str("%.2f" % self.game.settings.time) + " seconds )\n"
+        message += "Items sorted by " + self.game.settings.sortBy.upper() + " in " + self.game.settings.sortOrder.upper() + " order using " + self.game.settings.algorithm.upper() + " SORT:\n\n"
+
+        i = 1
+        for item in self.game.picked_items:
+            message += str(i) + ". " + item.name + " ($" + "%.2f" % item.price + ")\n"
+            i += 1
+
+        self.popup(title,message,500,350)
+
 
     def slider(self, slider, value):
         self.timeLabel.text = str(int(value)) + " seconds"
@@ -197,6 +202,9 @@ class SettingsPanel:
 
 
     def addLabel(self, layout, text, x, y):
+        """
+           adds a text label to the layout at specified coordinates
+        """
         label = Label(text = text,
                          font_size = "16sp",
                          pos_hint = {"center_x" : x, "center_y" : y},
@@ -215,7 +223,9 @@ class SettingsPanel:
         self.layout.add_widget(widget)
 
     def getSelectedItems(self):
-        # returns items selected which were selected by the user in SettingsPanel
+        """
+            returns items selected which were selected by the user in SettingsPanel
+        """
         selected = []
         for listItem in self.listItems:
             if(listItem.isChecked() == True):

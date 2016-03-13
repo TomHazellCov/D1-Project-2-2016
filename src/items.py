@@ -3,6 +3,7 @@ from entities import Item
 import os.path
 
 class ItemManager:
+    """ Load items from SQL database """
 
     def __init__(self, databasePath):
         self.load(databasePath)
@@ -32,8 +33,8 @@ class ItemManager:
 
     def getItems(self):
         itemList = []
-        for row in self.con.execute("SELECT * FROM items"):
-            item = Item(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
+        for i in self.con.execute("SELECT * FROM items"):
+            item = Item(i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7])
             itemList.append(item)
             self.itemList = itemList
         return itemList
