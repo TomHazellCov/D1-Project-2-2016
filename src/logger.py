@@ -17,26 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with BargainHunt. If not, see <http://www.gnu.org/licenses/>.
 """
+ 
+class Logger:
+    debug = True
 
-from kivy.app import App
-from kivy.clock import Clock
-from kivy.uix.boxlayout import BoxLayout
-from kivy.core.window import Window
-from SettingsPanel import SettingsPanel
-from GameScreen import GameScreen
-from Game import Game
-
-class BargainHuntApp(App):
-    def build(self):
-        self.game = Game()
-
-        self.root = BoxLayout(orientation = 'horizontal')
-        self.root.add_widget(self.game.gameScreen)
-        self.root.add_widget(self.game.settingsPanel.layout)
-
-        Clock.schedule_interval(self.game.update, 1.0 / 60.0)
-
-        return self.root
-
-BargainHuntApp().run()
-
+    def log(message):
+        if(Logger.debug == True):
+            print(message)

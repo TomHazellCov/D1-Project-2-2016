@@ -83,7 +83,7 @@ class Setting_Code(QWidget):
         #loads previous settings
         try:
             #makes json file into dict
-            setting = json.loads(open("Databases/Settings.json").read())
+            setting = json.loads(open("Databases/ssettings.json").read())
             #takes the value attached to the keys and turns them into a item
             colist1= setting["StartLocation"]
             colist2= setting["sortByValue"]
